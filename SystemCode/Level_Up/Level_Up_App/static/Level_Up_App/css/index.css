@@ -1,6 +1,12 @@
 h1{
   font-weight: bold;
   color: green;
+  float: left;
+}
+#main_img{
+  float: right;
+  width: 100px;
+  height: 100px;
 }
 #userInput{
   margin: 5px;
