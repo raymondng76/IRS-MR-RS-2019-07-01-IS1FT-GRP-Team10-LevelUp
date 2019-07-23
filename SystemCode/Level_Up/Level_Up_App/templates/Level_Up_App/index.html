@@ -13,9 +13,15 @@
     </div>
     <div class="container">
       <div class="jumbotron">
-        <h1>Welcome to Level Up!</h1>
 
+        <h1>Welcome to Level Up!</h1>
+        <img src="{% static "Level_Up_App/images/career_roadmap.jpg" %}" alt="Opps!" style="width:50px;height:50px">
       </div>
+      <form class="username" action="" method="post">
+        <p>Please enter your name to get started:</p>
+        <input id="userInput" type="text" name="user" placeholder="Your Name Here"><br>
+        <button id="userBtn" type="button" class="btn btn-primary" name="button">Let's Go!</button>
+      </form>
     </div>
   </body>
 </html>

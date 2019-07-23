@@ -1,0 +1,10 @@
+h1{
+  font-weight: bold;
+  color: green;
+}
+#userInput{
+  margin: 5px;
+}
+#userBtn{
+  margin: 20px 5px 5px 5px;
+}
