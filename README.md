@@ -1,4 +1,4 @@
-##SECTION 1 : PROJECT TITLE
+## SECTION 1 : PROJECT TITLE
 ## Level Up : Career Path Recommendation System
 
 ---
