@@ -17,10 +17,11 @@
         <h1>Welcome to Level Up!</h1>
         <img id="main_img" src="{% static "Level_Up_App/images/career_roadmap.jpg" %}" alt="Opps!">
       </div>
-      <form class="username" action="" method="post">
+      <form class="username" method="POST">
         <p>Please enter your name to get started:</p>
-        <input id="userInput" type="text" name="user" placeholder="Your Name Here"><br>
-        <button id="userBtn" type="button" class="btn btn-primary" name="button">Let's Go!</button>
+        {{ userForm.as_p }}
+        {% csrf_token %}
+        <input type="submit" class='btn btn-primary' name="" value="Let's Go!">
       </form>
     </div>
   </body>
