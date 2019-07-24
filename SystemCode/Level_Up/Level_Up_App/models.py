@@ -34,10 +34,10 @@ class User(models.Model):
 
 class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    eduLevel = models.CharField(max_length=200, choices=EDU_CHOICES)
+    eduLevel = models.CharField(max_length=200, choices=EDU_CHOICES, default=EDU_CHOICES[3][1])
     yearsExp = models.IntegerField(default=0)
-    currPosition = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES)
-    careerGoal = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES)
+    currPosition = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES, default=CAREER_POSITION_CHOICES[2][1])
+    careerGoal = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES, default=str(CAREER_POSITION_CHOICES[-1][1]))
 
     def __str__(self):
         return """User: {}, Highest Edu Level: {}, Years of working exp: {},
