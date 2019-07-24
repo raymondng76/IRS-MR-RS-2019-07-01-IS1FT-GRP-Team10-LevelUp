@@ -10,3 +10,9 @@ class QuestionaireForm(forms.ModelForm):
     class Meta():
         model = Questionaire
         fields = ['eduLevel', 'yearsExp', 'currPosition', 'careerGoal']
+        labels = {
+            'eduLevel' : 'Highest education level',
+            'yearsExp' : 'Years of working experience',
+            'currPosition' : 'Current working position',
+            'careerGoal' : 'Desired career goal'
+        }
