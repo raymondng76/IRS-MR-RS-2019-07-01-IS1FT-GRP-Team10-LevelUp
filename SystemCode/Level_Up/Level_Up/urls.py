@@ -19,6 +19,6 @@ from Level_Up_App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index')
-    # path('Level_Up_App/', include('Level_Up_App.urls'))
+    path('', views.index, name='index'),
+    path('Level_Up_App/', include('Level_Up_App.urls'))
 ]
