@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponseRedirect
 from Level_Up_App.forms import NewUserForm, QuestionaireForm
 from Level_Up_App.models import User, Questionaire
 # Create your views here.
@@ -8,22 +9,27 @@ def index(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
         if form.is_valid():
+            print(form.cleaned_data)
             request.session['username'] = form.cleaned_data['name']
             form.save(commit=True)
-            return userdetails(request)
+            return redirect('Level_Up_App:userdetails')
         else:
             print("ERROR: UserForm Invalid!")
+            return redirect('Level_Up_App:index')
     return render(request, 'Level_Up_App/index.html', form_dict)
 
 def userdetails(request):
     form = QuestionaireForm()
     username = request.session['username']
+    user = User.objects.get(name=username)
     form_dict = {'username': username, 'questionaire': form}
     if request.method == 'POST':
         form = QuestionaireForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
-            return index(request)
+            qform = form.save(commit=False)
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:index')
         else:
             print(form.errors)
             print("ERROR: QuestionaireForm invalid!")

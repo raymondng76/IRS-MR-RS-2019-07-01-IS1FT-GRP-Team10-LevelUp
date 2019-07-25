@@ -54,7 +54,7 @@ ROOT_URLCONF = 'Level_Up.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, '/Level_Up_App', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
