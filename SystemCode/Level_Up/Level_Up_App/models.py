@@ -40,4 +40,4 @@ class Questionaire(models.Model):
 
     def __str__(self):
         return """User: {}, Highest Edu Level: {}, Years of working exp: {},
-                Current position: {}, Have career goal: {}""".format(str(User.name), eduLevel, str(yearsExp), currPosition, careerGoal)
+                Current position: {}, Have career goal: {}""".format(str(User.name), self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
