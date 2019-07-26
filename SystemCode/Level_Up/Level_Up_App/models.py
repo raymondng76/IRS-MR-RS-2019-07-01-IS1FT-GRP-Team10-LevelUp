@@ -39,5 +39,5 @@ class Questionaire(models.Model):
     careerGoal = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES, default=CAREER_POSITION_CHOICES[2][1])
 
     def __str__(self):
-        return """User: {}, Highest Edu Level: {}, Years of working exp: {},
-                Current position: {}, Have career goal: {}""".format(str(User.name), self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
+        return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
+                Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
