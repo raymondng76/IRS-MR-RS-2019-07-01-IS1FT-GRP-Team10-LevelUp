@@ -41,3 +41,18 @@ class Questionaire(models.Model):
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
+
+class Skill(models.Model):
+    name = models.CharField(max_length=256, unique=True)
+
+    def __str__(self):
+        return self.name;
+
+class Course(models.Model):
+    coursecode = models.CharField(max_length=30, unique=True)
+    title = model.CharField(max_length=256, unique=True)
+    URL = models.URLField()
+    skillRequired = models.ManyToManyField(Skill)
+
+    def __str__(self):
+        return """Course Code: [{}], Title: [{}], URL: [{}], Skills Required: [{}]""".format(self.coursecode, self.title, str(object=self.URL), self.skillRequired)
