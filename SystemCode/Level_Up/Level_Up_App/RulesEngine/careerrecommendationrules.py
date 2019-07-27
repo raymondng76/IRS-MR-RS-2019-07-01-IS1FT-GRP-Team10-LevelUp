@@ -328,3 +328,223 @@ class CourseRecommender(KnowledgeEngine):
         """NICF-ITIL Foundation Certification in IT Service Management"""
         global recommendedcourses
         recommendedcourses.append()
+    @Rule()
+    def itsm_soa_sf(self):
+        """NICF-Service Offerings and Agreement Certificate"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def mbap_sf(self):
+        """NICF-Managing Business Analytics Projects"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def mr(self):
+        """NICF-Machine Reasoning"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def mxd_sf(self):
+        """NICF-Mobile User Experience Design"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def nmsm(self):
+        """NICF-New Media and Sentiment Mining"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def ooad_sf(self):
+        """NICF-Object Oriented Analysis & Design"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def oodp_sf(self):
+        """NICF-Object Oriented Design Patterns"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def p3o(self):
+        """NICF-Portfolio, Programme and Project Offices (P3O) - Foundation & Practitioner"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def paf-sf(self):
+        """NICF-Persistence and Analytics Fundamentals"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def pa_sf(self):
+        """NICF-Predictive Analytics - Insights of Trends and Irregularities"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def pe(self):
+        """NICF-Platform Engineering"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def pls(self):
+        """NICF-Platform Security"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def prince2_sf(self):
+        """NICF-PRINCE2 (PRoject IN Controlled Environments) - Foundation and Practitioner Certificate"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def prmls(self):
+        """NICF-Pattern Recognition and Machine Learning Systems"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def psupr(self):
+        """NICF-Problem Solving using Pattern Recognition"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def pto_sf(self):
+        """NICF-Product Thinking for Organisations"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def pydot_sf(self):
+        """NICF-Python for Data, Ops and Things"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def rbs(self):
+        """NICF-Robotic Systems"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def rcs(self):
+        """NICF-Recommender Systems"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def rs(self):
+        """NICF-Reasoning Systems"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sb_sf(self):
+        """NICF-Statistics Bootcamp"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sdi_sf(self):
+        """NICF-Strategic Design & Innovation"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sfb_sf(self):
+        """NICF-Statistics for Business"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sff_sf(self):
+        """NICF-Statistics Futures & Foresight"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sid_sf(self):
+        """NICF-Service Design"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sitp_sf(self):
+        """NICF-Digital Transformation Planning"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sma_sf(self):
+        """NICF-Social Media Analytics"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def smdl(self):
+        """NICF-Sequence Modeling with Deep Learning"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def snmf_sf(self):
+        """NICF-Security Notification and Messaging Fundamentals"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def spmf_sf(self):
+        """NICF-Strategic Product Market Fit"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def spmr_sf(self):
+        """NICF-Strategic Product Manager"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def srsd(self):
+        """NICF-Spatial Reasoning from Sensor Data"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def ssdiot_sf(self):
+        """NICF-Developing Smart Urban IoT Solutions"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def ssdla_sf(self):
+        """NICF-Secure Software Development Lifecycle for Agile"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def ssf_sf(self):
+        """NICF-Server Side Foundation"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def strca_sf(self):
+        """NICF-Systems Thinking & Root Cause Analysis"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def summl(self):
+        """NICF-Supervised and Unsupervised Modeling with Machine Learning"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def sva_sf(self):
+        """NICF-Service Analytics"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def ta_sf(self):
+        """NICF-Text Analytics"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def te_sf(self):
+        """NICF-Technopreneurship"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def tpml(self):
+        """NICF-Text Processing using Machine Learning"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def uxd_sf(self):
+        """NICF-Digital User Experience Design"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def vse(self):
+        """NICF-Vision Systems"""
+        global recommendedcourses
+        recommendedcourses.append()
+    @Rule()
+    def wa_sf(self):
+        """NICF-Web Analytics & SEO"""
+        global recommendedcourses
+        recommendedcourses.append()
