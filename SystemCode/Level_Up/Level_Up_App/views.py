@@ -12,13 +12,13 @@ def index(request):
             print(form.cleaned_data)
             request.session['username'] = form.cleaned_data['name']
             form.save(commit=True)
-            return redirect('Level_Up_App:userdetails')
+            return redirect('Level_Up_App:questionaire')
         else:
             print("ERROR: UserForm Invalid!")
             return redirect('Level_Up_App:index')
     return render(request, 'Level_Up_App/index.html', form_dict)
 
-def userdetails(request):
+def questionaire(request):
     form = QuestionaireForm()
     username = request.session['username']
     user = User.objects.get(name=username)
@@ -33,4 +33,4 @@ def userdetails(request):
         else:
             print(form.errors)
             print("ERROR: QuestionaireForm invalid!")
-    return render(request, 'Level_Up_App/userdetails.html', context=form_dict)
+    return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
