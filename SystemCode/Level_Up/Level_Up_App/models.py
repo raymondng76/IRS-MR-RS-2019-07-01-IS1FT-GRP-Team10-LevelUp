@@ -50,7 +50,7 @@ class Skill(models.Model):
 
 class Course(models.Model):
     coursecode = models.CharField(max_length=30, unique=True)
-    title = model.CharField(max_length=256, unique=True)
+    title = models.CharField(max_length=256, unique=True)
     URL = models.URLField()
     skillRequired = models.ManyToManyField(Skill)
 
