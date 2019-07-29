@@ -13,7 +13,7 @@ class CourseRecommender(KnowledgeEngine):
         """NICF-Advanced Cusomter Analytics"""
         global recommendedcourses
         recommendedcourses.append()
-    @Rule()
+    @Rule(NOT(PM)))
     def acp_sf(self):
         """NICF-PMI Agile Certified Practitioner (PMI-ACP) Preparatory Course"""
         global recommendedcourses
