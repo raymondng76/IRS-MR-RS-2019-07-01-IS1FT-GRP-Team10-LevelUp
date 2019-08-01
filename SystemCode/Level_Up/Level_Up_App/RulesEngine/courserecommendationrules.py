@@ -1,4 +1,4 @@
-from pyknow import *
+from pyknow import *, Rule
 from Level_Up_App.models import Course, Skill
 
 class SkillGapsFact(Fact):
@@ -13,7 +13,7 @@ class CourseRecommender(KnowledgeEngine):
         """NICF-Advanced Cusomter Analytics"""
         global recommendedcourses
         recommendedcourses.append()
-    @Rule(NOT(PM)))
+    @Rule()
     def acp_sf(self):
         """NICF-PMI Agile Certified Practitioner (PMI-ACP) Preparatory Course"""
         global recommendedcourses
@@ -369,7 +369,7 @@ class CourseRecommender(KnowledgeEngine):
         global recommendedcourses
         recommendedcourses.append()
     @Rule()
-    def paf-sf(self):
+    def paf_sf(self):
         """NICF-Persistence and Analytics Fundamentals"""
         global recommendedcourses
         recommendedcourses.append()
