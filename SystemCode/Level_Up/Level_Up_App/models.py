@@ -1,9 +1,19 @@
 from django.db import models
-
+from django.urls import reverse
 
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        # return reverse('Level_Up_App:questionaire', kwargs={'pk': self.pk})
+        return reverse('Level_Up_App:questionaire')
+
+class EducationLevel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -45,6 +55,9 @@ class Questionaire(models.Model):
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
+
+    def get_absolute_url(self):
+        return reverse('IndexView')
 
 class Skill(models.Model):
     name = models.CharField(max_length=256, unique=True)
