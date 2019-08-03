@@ -12,12 +12,6 @@ class User(models.Model):
         # return reverse('Level_Up_App:questionaire', kwargs={'pk': self.pk})
         return reverse('Level_Up_App:questionaire')
 
-class EducationLevel(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
-
 class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     EDU_CHOICES = [
@@ -57,7 +51,19 @@ class Questionaire(models.Model):
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
 
     def get_absolute_url(self):
-        return reverse('IndexView')
+        return reverse('Level_Up_App:index') #TODO: Update to next view
+
+class EducationLevel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class CareerPosition(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Skill(models.Model):
     name = models.CharField(max_length=256, unique=True)
