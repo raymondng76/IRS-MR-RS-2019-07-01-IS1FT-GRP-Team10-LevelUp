@@ -4,6 +4,6 @@ from Level_Up_App import views
 app_name = 'Level_Up_App'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('questionaire/', views.questionaire, name='questionaire')
+    path('', views.IndexView.as_view(), name='index'),
+    path('questionaire/', views.QuestionaireView.as_view(), name='questionaire')
 ]
