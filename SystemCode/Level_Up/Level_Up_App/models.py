@@ -9,42 +9,15 @@ class User(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        # return reverse('Level_Up_App:questionaire', kwargs={'pk': self.pk})
-        return reverse('Level_Up_App:questionaire')
+        return reverse('Level_Up_App:questionaire', kwargs={'pk': self.pk})
+        #return reverse('Level_Up_App:questionaire')
 
 class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    EDU_CHOICES = [
-        ('SECONDARY', 'Secondary'),
-        ('DIPLOMA', 'Diploma'),
-        ('ASSODEG', 'Associate Degree'),
-        ('BACHDEG', 'Bachelor Degree'),
-        ('MASTDEG', 'Master Degree'),
-        ('DOCTDEG', 'Doctoral Degree'),
-    ]
-    eduLevel = models.CharField(max_length=200, choices=EDU_CHOICES, default=EDU_CHOICES[3][1])
+    eduLevel = models.CharField(max_length=200)
     yearsExp = models.IntegerField(default=0)
-    CAREER_POSITION_CHOICES = [
-        ('ASSOSOFTENG', 'Associate Software Engineer'),
-        ('SOFTENG', 'Software Engineer'),
-        ('SOFTSALENG', 'Software Sales Engineer'),
-        ('SENISOFTENG', 'Senior Software Engineer'),
-        ('PRINSOFTENG', 'Principle Software Engineer'),
-        ('SOFTMAN', 'Software Manager'),
-        ('SOFTSALMAN', 'Software Sales Manager'),
-        ('SENISOFTMAN', 'Senior Software Manager'),
-        ('SENSSOFTSALMAN', 'Senior Software Sales Manager'),
-        ('SOFTDIR', 'Software Director'),
-        ('SOFTSALDIR', 'Software Sales Director'),
-        ('SENSOFTDIR', 'Senior Software Director'),
-        ('SENSOFTSALDIR', 'Senior Software Sales Director'),
-        ('SOFTVP', 'Vice President, Software'),
-        ('SENSOFTVP', 'Senior Vice President, Software'),
-        ('CTO', 'Chief Technology Officer'),
-        ('CIO', 'Chief Information Officer'),
-    ]
-    currPosition = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES, default=CAREER_POSITION_CHOICES[2][1])
-    careerGoal = models.CharField(max_length=200, choices=CAREER_POSITION_CHOICES, default=CAREER_POSITION_CHOICES[2][1])
+    currPosition = models.CharField(max_length=200)
+    careerGoal = models.CharField(max_length=200)
 
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],

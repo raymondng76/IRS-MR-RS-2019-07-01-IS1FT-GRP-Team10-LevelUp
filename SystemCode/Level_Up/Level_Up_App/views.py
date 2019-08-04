@@ -1,45 +1,24 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import View, CreateView, TemplateView, ListView, DetailView
-# from Level_Up_App.forms import QuestionaireForm
+from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
+from Level_Up_App.forms import NewUserForm, QuestionaireForm
 from Level_Up_App.models import User, Questionaire
 # Create your views here.
-# def index(request):
-#     form = NewUserForm()
-#     form_dict = {'userForm': form}
-#     if request.method == 'POST':
-#         form = NewUserForm(request.POST)
-#         if form.is_valid():
-#             print(form.cleaned_data)
-#             request.session['username'] = form.cleaned_data['name']
-#             form.save(commit=True)
-#             return redirect('Level_Up_App:questionaire')
-#         else:
-#             print("ERROR: UserForm Invalid!")
-#             return redirect('Level_Up_App:index')
-#     return render(request, 'Level_Up_App/index.html', form_dict)
 
-class IndexView(CreateView):
-    model = User
-    fields = ['name']
+class IndexView(FormView):
+    template_name = 'Level_Up_App/user_form.html'
+    success_url = '/questionaire/'
+    form_class = NewUserForm
 
-# def questionaire(request):
-#     form = QuestionaireForm()
-#     username = request.session['username']
-#     user = User.objects.get(name=username)
-#     form_dict = {'username': username, 'questionaire': form}
-#     if request.method == 'POST':
-#         form = QuestionaireForm(request.POST)
-#         if form.is_valid():
-#             qform = form.save(commit=False)
-#             qform.user = user
-#             qform.save()
-#             return redirect('Level_Up_App:index')
-#         else:
-#             print(form.errors)
-#             print("ERROR: QuestionaireForm invalid!")
-#     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
+    def form_valid(self, form):
+        return super(IndexView, self).form_valid(form)
 
-class QuestionaireView(CreateView):
-    model = Questionaire
-    fields = ['eduLevel','yearsExp','currPosition','careerGoal']
+
+class QuestionaireView(FormView):
+    context_object_name = 'questionaire_form'
+    template_name = 'Level_Up_App/questionaire_form.html'
+    success_url = 'Level_Up_App/user_form.html'
+    form_class = QuestionaireForm
+
+    def form_valid(self, form):
+        return super(QuestionaireView, self).form_valid(form)
