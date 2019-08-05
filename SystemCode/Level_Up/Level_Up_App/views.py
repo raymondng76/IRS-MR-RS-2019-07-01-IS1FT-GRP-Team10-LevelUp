@@ -22,3 +22,6 @@ class QuestionaireView(FormView):
 
     def form_valid(self, form):
         return super(QuestionaireView, self).form_valid(form)
+
+# class ResultView(ListView):
+#     model
