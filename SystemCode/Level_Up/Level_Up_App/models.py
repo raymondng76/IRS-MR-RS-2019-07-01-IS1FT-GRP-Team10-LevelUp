@@ -51,7 +51,7 @@ class Course(models.Model):
     skillRequired = models.ManyToManyField(Skill)
 
     def __str__(self):
-        return """Course Code: [{}], Title: [{}], URL: [{}], Skills Required: [{}]""".format(self.coursecode, self.title, str(object=self.URL), self.skillRequired)
+        return """Course Code: [{}], Title: [{}], URL: [{}], Skills Required: [{}]""".format(self.coursecode, self.title, str(object=self.URL), str(self.skillRequired))
 
 class CareerSkills(models.Model):
     careerpos = models.ForeignKey(CareerPosition, on_delete=models.CASCADE)
@@ -67,3 +67,31 @@ class CareerPathMap(models.Model):
 
     def __str__(self):
         return "InitialPos: [{}], NextPos: [{}], YearsRequired: [{}]".format(self.initialpos, self.nextpos, self.yearsreq)
+
+class CareerPathHeuristic(models.Model):
+    careerpos = models.ForeignKey(CareerPosition, on_delete=models.CASCADE)
+    heuristiccost = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "Career Position: [{}], Heuristic Mean Cost: [{}]".format(self.careerpos, str(self.heuristiccost))
+
+class Job(models.Model):
+    name = models.ForeignKey(CareerPosition, on_delete=models.CASCADE)
+    skillRequired = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    minSalary = models.FloatField(default=0.0)
+    maxSalary = models.FloatField(default=0.0)
+    eduLvl = models.ForeignKey(EducationLevel, on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    URL = models.URLField()
+    description = models.CharField(max_length=5000)
+    company = models.CharField(max_length=256)
+
+    def __str__(self):
+        return """Name: [{}],
+                skillRequired: [{}],
+                minSalary: [{}],
+                maxSalary: [{}],
+                eduLvl: [{}],
+                title: [{}],
+                """.format(self.name, str(self.skillRequired), str(self.minSalary), str(self.maxSalary),
+                    str(self.eduLvl), self.title)
