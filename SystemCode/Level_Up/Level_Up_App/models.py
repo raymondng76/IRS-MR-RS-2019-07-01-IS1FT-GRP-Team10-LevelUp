@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+from django.urls import reverse_lazy, reverse
 
 # Create your models here.
 class User(models.Model):
@@ -9,7 +9,7 @@ class User(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('Level_Up_App:questionaire', kwargs={'pk': self.pk})
+        return reverse('Level_Up_App:questionaire', kwargs={'pk': self.object.id})
         #return reverse('Level_Up_App:questionaire')
 
 class Questionaire(models.Model):
@@ -24,7 +24,7 @@ class Questionaire(models.Model):
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
 
     def get_absolute_url(self):
-        return reverse('Level_Up_App:index') #TODO: Update to next view
+        return reverse_lazy('Level_Up_App:index') #TODO: Update to next view
 
 class EducationLevel(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -52,3 +52,18 @@ class Course(models.Model):
 
     def __str__(self):
         return """Course Code: [{}], Title: [{}], URL: [{}], Skills Required: [{}]""".format(self.coursecode, self.title, str(object=self.URL), self.skillRequired)
+
+class CareerSkills(models.Model):
+    careerpos = models.ForeignKey(CareerPosition, on_delete=models.CASCADE)
+    skillRequired = models.ManyToManyField(Skill)
+
+    def __str__(self):
+        return """Career position: """.format(self.careerpos)
+
+class CareerPathMap(models.Model):
+    initialpos = models.ForeignKey(CareerPosition, related_name='%(class)s_init_pos', on_delete=models.CASCADE)
+    nextpos = models.ForeignKey(CareerPosition, related_name='%(class)s_next_pos', on_delete=models.CASCADE)
+    yearsreq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "InitialPos: [{}], NextPos: [{}], YearsRequired: [{}]".format(self.initialpos, self.nextpos, self.yearsreq)
