@@ -39,11 +39,13 @@
             </tr>
           </thead>
           {% for course in courses %}
+          <tbody>
             <tr>
               <td>{{course.coursecode}}</td>
               <td>{{course.title}}</td>
               <td><a href="{{course.URL}}">Course Link</a></td>
             </tr>
+          </tbody>
           {% endfor %}
       </table>
       {% else %}
