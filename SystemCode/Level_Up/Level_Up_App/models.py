@@ -8,10 +8,6 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('Level_Up_App:questionaire', kwargs={'pk': self.object.id})
-        #return reverse('Level_Up_App:questionaire')
-
 class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     eduLevel = models.CharField(max_length=200)
@@ -22,9 +18,6 @@ class Questionaire(models.Model):
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
-
-    def get_absolute_url(self):
-        return reverse_lazy('Level_Up_App:index') #TODO: Update to next view
 
 class EducationLevel(models.Model):
     name = models.CharField(max_length=50, unique=True)
