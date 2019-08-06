@@ -19,3 +19,10 @@ h1{
   width: 500px;
   height: 500px;
 }
+.careerendpoint{
+  border: 5px outset black;
+  align-content: center;
+}
+#recommendtable{
+  border: 2px solid black;
+}
