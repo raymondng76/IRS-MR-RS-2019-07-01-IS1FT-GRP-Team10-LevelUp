@@ -51,7 +51,7 @@ class CareerSkills(models.Model):
     skillRequired = models.ManyToManyField(Skill)
 
     def __str__(self):
-        return """Career position: """.format(self.careerpos)
+        return "Career position: ".format(self.careerpos)
 
 class CareerPathMap(models.Model):
     initialpos = models.ForeignKey(CareerPosition, related_name='%(class)s_init_pos', on_delete=models.CASCADE)
