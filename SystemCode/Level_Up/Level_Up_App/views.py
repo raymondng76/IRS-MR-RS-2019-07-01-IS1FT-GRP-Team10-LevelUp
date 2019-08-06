@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from Level_Up_App.forms import NewUserForm, QuestionaireForm
-from Level_Up_App.models import User, Questionaire
+from Level_Up_App.models import User, Questionaire, Course, Job
 # Create your views here.
 
 def index(request):
@@ -30,7 +30,18 @@ def questionaire(request):
             qform = form.save(commit=False)
             qform.user = user
             qform.save()
-            return redirect('Level_Up_App:index')
+            return redirect('Level_Up_App:results')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
+
+def result(request):
+    jobs = Job.objects.all()
+    courses = Course.objects.all()
+    user = request.session['username']
+    careerendpoint = 'CIO'
+    result_dict = {'username': user,
+                'careerendpoint': careerendpoint,
+                'courses': courses,
+                'jobs': jobs}
+    return render(request, 'Level_Up_App/results.html', result_dict)
