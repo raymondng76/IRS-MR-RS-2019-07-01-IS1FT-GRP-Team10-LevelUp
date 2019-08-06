@@ -6,9 +6,9 @@
     <div class="jumbotron">
       <h1>Welcome to Level Up!</h1>
     </div>
-    <form method="post" action="">
+    <form class="index" method="post" action="">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ userForm.as_p }}
       <input type="submit" class="btn btn-primary" value="Let's Go!">
     </form>
   </div>
