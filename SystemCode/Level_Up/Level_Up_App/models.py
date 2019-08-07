@@ -44,14 +44,14 @@ class Course(models.Model):
     skillRequired = models.ManyToManyField(Skill)
 
     def __str__(self):
-        return """Course Code: [{}], Title: [{}], URL: [{}], Skills Required: [{}]""".format(self.coursecode, self.title, str(object=self.URL), str(self.skillRequired))
+        return """Course Code: [{}], Title: [{}]""".format(self.coursecode, self.title)
 
 class CareerSkills(models.Model):
     careerpos = models.ForeignKey(CareerPosition, on_delete=models.CASCADE)
     skillRequired = models.ManyToManyField(Skill)
 
     def __str__(self):
-        return "Career position: ".format(self.careerpos)
+        return "Career position: [{}]".format(self.careerpos)
 
 class CareerPathMap(models.Model):
     initialpos = models.ForeignKey(CareerPosition, related_name='%(class)s_init_pos', on_delete=models.CASCADE)
@@ -81,10 +81,5 @@ class Job(models.Model):
 
     def __str__(self):
         return """Name: [{}],
-                skillRequired: [{}],
-                minSalary: [{}],
-                maxSalary: [{}],
-                eduLvl: [{}],
                 title: [{}],
-                """.format(self.name, str(self.skillRequired), str(self.minSalary), str(self.maxSalary),
-                    str(self.eduLvl), self.title)
+                """.format(self.name, self.title)
