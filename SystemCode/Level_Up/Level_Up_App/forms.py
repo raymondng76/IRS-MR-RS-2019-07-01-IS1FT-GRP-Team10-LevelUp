@@ -4,7 +4,11 @@ from Level_Up_App.models import User, Questionaire, EducationLevel, CareerPositi
 class NewUserForm(forms.ModelForm):
     class Meta():
         model = User
-        fields = '__all__'
+        fields = ['name', 'careeraspiration']
+        labels = {
+            'name' : 'Your name:',
+            'careeraspiration' : 'Do you have a career you aspire to? ',
+        }
 
 
 class QuestionaireForm(forms.ModelForm):

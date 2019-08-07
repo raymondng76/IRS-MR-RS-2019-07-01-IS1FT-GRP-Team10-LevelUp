@@ -6,11 +6,12 @@
     <div class="jumbotron">
       <h1>Welcome to Level Up!</h1>
     </div>
+    <h4>Welcome to the Level Up! career recommendation agent.</h4>
+    <h4>To begin, start by entering your name below.</h4><br>
     <form class="index" method="post" action="">
       {% csrf_token %}
       {{ userForm.as_p }}
       <input type="submit" class="btn btn-primary" value="Let's Go!">
     </form>
   </div>
-
 {% endblock %}

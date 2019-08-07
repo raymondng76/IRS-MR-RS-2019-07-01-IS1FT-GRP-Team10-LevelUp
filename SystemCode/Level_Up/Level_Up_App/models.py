@@ -4,9 +4,10 @@ from django.urls import reverse_lazy, reverse
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    careeraspiration = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return "Name: [{}], Have career aspiration: [{}]".format(self.name, str(self.careeraspiration))
 
 class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
