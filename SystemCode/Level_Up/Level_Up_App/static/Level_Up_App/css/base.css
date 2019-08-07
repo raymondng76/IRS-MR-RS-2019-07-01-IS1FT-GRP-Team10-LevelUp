@@ -19,10 +19,11 @@ h1{
   width: 500px;
   height: 500px;
 }
-.careerendpoint{
+#careerendpoint{
   border: 5px outset black;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  padding: 10px;
+  margin: auto;
   align-content: center;
-}
-#recommendtable{
-  border: 2px solid black;
 }
