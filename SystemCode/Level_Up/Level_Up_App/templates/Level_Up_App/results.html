@@ -7,12 +7,12 @@
       <h2>Career Roadmap</h2>
     </div>
     <div>
-      <h4>Hey {{username}}!, your recommended career aspiration is:</h4>
-      <h1 id='careerendpoint'>{{careerendpoint}}</h1>
+      <h4>Hey {{username}}!, your recommended career aspiration is:</h4><br>
+      <h1 id="careerendpoint">{{careerendpoint}}</h1><br>
     </div>
     <div class="jobsrecommend">
       {% if jobs %}
-      <table class='recommendtable'>
+      <table class="recommendtable table table-striped table-bordered table-sm">
         <thead>
           <tr>
             <th></th>
@@ -28,9 +28,9 @@
         <h3>No job recommendation available!</h3>
       {% endif %}
     </div>
-    <div class="courserecommend">
+    <div class="courserecommend table table-striped table-bordered table-sm">
       {% if courses %}
-        <table class='recommendtable'>
+        <table class="recommendtable">
           <thead>
             <tr>
               <th>Course Code</th>
@@ -38,15 +38,17 @@
               <th>URL</th>
             </tr>
           </thead>
-          {% for course in courses %}
+
           <tbody>
+            {% for course in courses %}
             <tr>
               <td>{{course.coursecode}}</td>
               <td>{{course.title}}</td>
               <td><a href="{{course.URL}}">Course Link</a></td>
             </tr>
+            {% endfor %}
           </tbody>
-          {% endfor %}
+
       </table>
       {% else %}
         <h3>No course recommendation available!</h3>
