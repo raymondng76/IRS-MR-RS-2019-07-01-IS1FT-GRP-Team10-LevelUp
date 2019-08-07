@@ -13,6 +13,7 @@ def index(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             request.session['username'] = form.cleaned_data['name']
+            request.session['careeraspiration'] = form.cleaned_data['careeraspiration']
             form.save()
             return redirect('Level_Up_App:questionaire')
         else:
