@@ -1,4 +1,4 @@
-from pyknow import *, Rule
+from pyknow import *
 from Level_Up_App.models import Course, Skill
 
 class SkillGapsFact(Fact):
