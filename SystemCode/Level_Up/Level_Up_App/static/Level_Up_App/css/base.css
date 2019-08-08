@@ -27,3 +27,9 @@ h1{
   margin: auto;
   align-content: center;
 }
+
+tbody{
+  height: 500px;
+  overflow: auto;
+  align-content: center;
+}
