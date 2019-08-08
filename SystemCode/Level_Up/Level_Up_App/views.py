@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from Level_Up_App.forms import NewUserForm, QuestionaireForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill
+from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender
 # Create your views here.
 
 def index(request):
@@ -47,7 +48,7 @@ def result(request):
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
 
-def filtercourse():
+def filtercourse(): # Sample filter code
     skill = Skill.objects.get(name="C++")
     filteredcourse = Course.objects.filter(skillRequired__in=[skill])
     return filteredcourse
