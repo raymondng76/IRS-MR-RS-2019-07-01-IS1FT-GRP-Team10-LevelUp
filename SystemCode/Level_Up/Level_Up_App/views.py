@@ -6,6 +6,7 @@ from Level_Up_App.forms import NewUserForm, QuestionaireForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender
 from Level_Up_App.careerknowledgegraph import CareerPathKnowledgeGraph
+from Level_Up_App.CareerPathASTARSearch import searchCareerPath
 # Create your views here.
 
 def index(request):
@@ -31,6 +32,12 @@ def questionaire(request):
         form = QuestionaireForm(request.POST)
         if form.is_valid():
             qform = form.save(commit=False)
+            request.session['currPosition'] = str(form.cleaned_data['currPosition'])
+            if request.session['careeraspiration'] == True:
+                request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
+            else:
+                #TODO:replace with career end point from questionaire
+                request.session['careerendpoint'] = 'Chief Information Officer'
             qform.user = user
             qform.save()
             return redirect('Level_Up_App:results')
@@ -42,6 +49,11 @@ def result(request):
     cpkg = CareerPathKnowledgeGraph()
     careerkg = cpkg.getCareerKnowledgeMap()
     careerph = cpkg.getCareerPathHeuristic()
+    currPos = request.session['currPosition']
+    endpt = request.session['careerendpoint']
+    print("CurrPos: " + str(currPos))
+    print("EndPt: " + str(endpt))
+    searchCareerPath(careerkg, careerph, currPos, endpt)
 
     jobs = Job.objects.all()
     courses = filtercourse()
