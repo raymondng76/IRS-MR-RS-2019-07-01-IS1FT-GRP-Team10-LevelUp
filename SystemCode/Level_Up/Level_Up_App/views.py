@@ -5,7 +5,7 @@ from django.views.generic import View, CreateView, TemplateView, ListView, Detai
 from Level_Up_App.forms import NewUserForm, QuestionaireForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender
-from Level_Up_App.careerknowledgegraph import CareerPathKnowlegeGraph
+from Level_Up_App.careerknowledgegraph import CareerPathKnowledgeGraph
 # Create your views here.
 
 def index(request):
@@ -39,7 +39,7 @@ def questionaire(request):
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
 
 def result(request):
-    cpkg = CareerPathKnowlegeGraph()
+    cpkg = CareerPathKnowledgeGraph()
     careerkg = cpkg.getCareerKnowledgeMap()
     careerph = cpkg.getCareerPathHeuristic()
 

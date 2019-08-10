@@ -1,12 +1,12 @@
 from Level_Up_App.models import CareerPathHeuristic, CareerPathMap, CareerPosition
 
-class CareerPathKnowlegeGraph:
+class CareerPathKnowledgeGraph:
     __instance = None
     @staticmethod
     def getInstance():
         """Static accessor for the knowledge graph"""
         if CareerPathKnowlegeGraph.__instance == None:
-            CareerPathKnowlegeGraph()
+            CareerPathKnowledgeGraph()
         return CareerPathKnowlegeGraph.__instance
 
     def getCareerKnowledgeMap(self):
@@ -19,19 +19,26 @@ class CareerPathKnowlegeGraph:
 
     def __init__(self):
         """Virtual private constructor"""
-        if CareerPathKnowlegeGraph.__instance != None:
+        if CareerPathKnowledgeGraph.__instance != None:
             raise Exception("Class is a singleton")
         else:
-            CareerPathKnowlegeGraph.__instance = self
+            CareerPathKnowledgeGraph.__instance = self
             careerknowledgegraph = {}
             careerpathheuristic = {}
+
             careerposarr = CareerPosition.objects.all()
             # Loop thru all career position and create both career path and career heuristic graph
             for cp in careerposarr:
                 cpqueryset = CareerPathMap.objects.filter(initialpos__name=cp)
                 chqueryset = CareerPathHeuristic.objects.filter(careerpos__name=cp)
                 for qs in cpqueryset:
-                    careerknowledgegraph[str(qs.initialpos)] = [str(qs.nextpos), qs.yearsreq]
+                    if str(qs.initialpos) in careerknowledgegraph:
+                        dictval = careerknowledgegraph[str(qs.initialpos)]
+                        dictval.append(str(qs.nextpos))
+                        dictval.append(qs.yearsreq)
+                        careerknowledgegraph[str(qs.initialpos)] = dictval
+                    else:
+                        careerknowledgegraph[str(qs.initialpos)] = [str(qs.nextpos), qs.yearsreq]
                 for qh in chqueryset:
                     careerpathheuristic[str(qh.careerpos)] = qh.heuristiccost
             self.__universalcareergraph = careerknowledgegraph
