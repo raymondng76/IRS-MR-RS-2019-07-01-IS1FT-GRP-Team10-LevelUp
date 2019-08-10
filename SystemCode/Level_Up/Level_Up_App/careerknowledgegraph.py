@@ -22,7 +22,7 @@ class CareerPathKnowledgeGraph:
         if CareerPathKnowledgeGraph.__instance != None:
             raise Exception("Class is a singleton")
         else:
-            CareerPathKnowledgeGraph.__instance = self
+
             careerknowledgegraph = {}
             careerpathheuristic = {}
 
@@ -43,3 +43,4 @@ class CareerPathKnowledgeGraph:
                     careerpathheuristic[str(qh.careerpos)] = qh.heuristiccost
             self.__universalcareergraph = careerknowledgegraph
             self.__careerpathheuristic = careerpathheuristic
+            CareerPathKnowledgeGraph.__instance = self
