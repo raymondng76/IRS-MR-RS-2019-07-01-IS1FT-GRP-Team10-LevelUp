@@ -1,4 +1,4 @@
-from pyknow import *
+from experta import *
 
 class QuestionaireFact(Fact):
     """Fact input from the questionaire"""

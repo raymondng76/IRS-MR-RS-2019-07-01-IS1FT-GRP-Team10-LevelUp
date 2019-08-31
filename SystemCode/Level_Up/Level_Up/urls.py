@@ -19,5 +19,6 @@ from Level_Up_App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('webhook/', views.webhook, name='webhook'),
     path('', include('Level_Up_App.urls'))
 ]

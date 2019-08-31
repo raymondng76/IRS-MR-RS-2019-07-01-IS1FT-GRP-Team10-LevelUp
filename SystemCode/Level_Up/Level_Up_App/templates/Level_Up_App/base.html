@@ -6,11 +6,18 @@
     <title>Level Up!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static "Level_Up_App/css/base.css" %}">
+    <script type="text/javascript">
+      function updateID() {
+        var newSrc = document.getElementById("apiid").value;
+        document.getElementById("chatbotframe").src=newSrc;
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="navbar-nav container">
         <a class="navbar-brand" href="{% url 'Level_Up_App:index' %}">Level UP!</a>
+        <a class="navbar-link" href="{% url 'Level_Up_App:chatbot' %}">Chat Assistant</a>
         <a class="navbar-link navbar-right" href="{% url 'admin:index' %}">Admin Console</a>
       </div>
     </nav>
