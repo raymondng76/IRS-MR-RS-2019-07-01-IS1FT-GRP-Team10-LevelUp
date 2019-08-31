@@ -1,14 +1,22 @@
-from pyknow import *
+from Level_Up_App.models import Job, Skill, CareerPosition, CareerSkills
 
-class SkillSetFact(Fact):
-    """Fact input from derived career map"""
-    pass
+def getJobRecommendation(skillset):
+    return getMatchJob(skillset)
 
-recommendedjobs = list()
+def getMatchJob(skills):
+    joblist = list()
+    jobs = Job.objects.all()
+    for job in jobs:
+        skillreq = job.skillRequired.all()
+        if matchSkills(skillreq, skills):
+            joblist.append(job)
+    return joblist
 
-class JobRecommender(KnowledgeEngine):
-    @Rule()
-    def recommend(self):
-        """Recommend jobs"""
-        global recommendedjobs
-        recommendedjobs.append()
+def matchSkills(list1, list2):
+    result = False
+    for x in list1:
+        for y in list2:
+            if str(x) == str(y):
+                result = True
+                return result
+    return result

@@ -15,17 +15,27 @@
       <table class="recommendtable table table-striped table-bordered table-sm">
         <thead>
           <tr>
-            <th></th>
+            <th>Title</th>
+            <th>Education Level</th>
+            <th>Company</th>
+            <th>Min Salary</th>
+            <th>Max Salary</th>
+            <th>URL</th>
           </tr>
         </thead>
         {% for job in jobs %}
           <tr>
-            <td> </td>
+            <td>{{job.title}}</td>
+            <td>{{job.eduLvl}}</td>
+            <td>{{job.company}}</td>
+            <td>{{job.minSalary}}</td>
+            <td>{{job.maxSalary}}</td>
+            <td><a href="{{course.URL}}">Job Link</a></td>
           </tr>
         {% endfor %}
       </table>
       {% else %}
-        <h3>No job recommendation available!</h3>
+        <h3>Sorry! No job recommendation available!</h3>
       {% endif %}
     </div>
     <div class="courserecommend table table-striped table-bordered table-sm">
@@ -51,7 +61,7 @@
 
       </table>
       {% else %}
-        <h3>No course recommendation available!</h3>
+        <h3>Sorry! No course recommendation available!</h3>
       {% endif %}
     </div>
   </div>
