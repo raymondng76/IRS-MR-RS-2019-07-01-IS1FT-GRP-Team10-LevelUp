@@ -4,3 +4,8 @@ SystemCode/Level_Up/.vscode/settings.json
 SystemCode\Level_Up\Level_Up\__pycache__
 SystemCode\Level_Up\Level_Up_App\__pycache__
 *.pyc
+SystemCode/Level_Up/Level_Up/__pycache__/settings.cpython-36.pyc
+SystemCode/Level_Up/Level_Up_App/__pycache__/CareerPathASTARSearch.cpython-36.pyc
+SystemCode/Level_Up/Level_Up_App/__pycache__/chatbot_util.cpython-36.pyc
+SystemCode/Level_Up/Level_Up_App/__pycache__/courserecommendationrules.cpython-36.pyc
+SystemCode/Level_Up/Level_Up_App/__pycache__/views.cpython-36.pyc
