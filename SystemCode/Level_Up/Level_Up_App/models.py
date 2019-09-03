@@ -21,6 +21,38 @@ class Questionaire(models.Model):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
                 Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
 
+class PersonalityQuestionaire1(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    q1EI = models.CharField(max_length=100)
+    q2EI = models.CharField(max_length=100)
+    q3EI = models.CharField(max_length=100)
+    q4EI = models.CharField(max_length=100)
+    q5EI = models.CharField(max_length=100)
+    q1SN = models.CharField(max_length=100)
+    q2SN = models.CharField(max_length=100)
+    q3SN = models.CharField(max_length=100)
+    q4SN = models.CharField(max_length=100)
+    q5SN = models.CharField(max_length=100)
+
+    def __str__(self):
+        return """User: [{}]""".format(self.user)
+
+class PersonalityQuestionaire2(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    q1TF = models.CharField(max_length=100)
+    q2TF = models.CharField(max_length=100)
+    q3TF = models.CharField(max_length=100)
+    q4TF = models.CharField(max_length=100)
+    q5TF = models.CharField(max_length=100)
+    q1JP = models.CharField(max_length=100)
+    q2JP = models.CharField(max_length=100)
+    q3JP = models.CharField(max_length=100)
+    q4JP = models.CharField(max_length=100)
+    q5JP = models.CharField(max_length=100)
+
+    def __str__(self):
+        return """User: [{}]""".format(self.user)
+
 class EducationLevel(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -166,3 +198,19 @@ class ChatbotVar(models.Model):
 
     def __str__(self):
         return """Persona: [{}]""".format(self.persona)
+
+class PersonalityQuestion(models.Model):
+    tag = models.CharField(max_length=10)
+    question = models.CharField(max_length=256)
+
+    def __str__(self):
+        return """Tag: [{}], Question: [{}]""".format(self.tag, self.question)
+
+class PersonalityAnswer(models.Model):
+    tag = models.ForeignKey(PersonalityQuestion, on_delete=models.CASCADE)
+    answer1 = models.CharField(max_length=100)
+    answer2 = models.CharField(max_length=100)
+
+    def __str__(self):
+        return """Tag: [{}], Answer1: [{}],
+        Answer2: [{}]""".format(self.tag.tag, self.answer1, self.answer2)

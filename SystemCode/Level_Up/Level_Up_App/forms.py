@@ -21,3 +21,6 @@ class QuestionaireForm(forms.ModelForm):
         labels = {
             'yearsExp' : 'Years of working experience',
         }
+
+# class QuestionaireForm(forms.Form):
+#     q1EI = forms.ModelChoiceField(label='You feel it\'s worse to be more.' )
