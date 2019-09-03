@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from django.views.decorators.csrf import csrf_exempt
 from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form
-from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar
+from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender, recommendedcourses
 from Level_Up_App.jobrecommendationrules import getJobRecommendation
 from Level_Up_App.careerknowledgegraph import CareerPathKnowledgeGraph
@@ -14,6 +14,7 @@ from Level_Up_App.library.df_response_lib import *
 import json
 from enum import Enum
 from Level_Up_App.chatbot_util import *
+from Level_Up_App.mbti_qna import *
 
 # Create your views here.
 def index(request):
@@ -43,9 +44,6 @@ def questionaire(request):
             # if user checks the have career aspiration checkbox
             if request.session['careeraspiration'] == True:
                 request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
-            else:
-                #TODO:replace with career end point from questionaire
-                request.session['careerendpoint'] = 'Chief Information Officer'
             qform.user = user
             qform.save()
             if request.session['careeraspiration'] == True:
@@ -65,16 +63,16 @@ def personalityquestionaire1(request):
         form = PersonalityQuestionaire1Form(request.POST)
         if form.is_valid():
             qform = form.save(commit=False)
-            request.session['q1EI'] = str(form.cleaned_data['q1EI'])
-            request.session['q2EI'] = str(form.cleaned_data['q2EI'])
-            request.session['q3EI'] = str(form.cleaned_data['q3EI'])
-            request.session['q4EI'] = str(form.cleaned_data['q4EI'])
-            request.session['q5EI'] = str(form.cleaned_data['q5EI'])
-            request.session['q1SN'] = str(form.cleaned_data['q1SN'])
-            request.session['q2SN'] = str(form.cleaned_data['q2SN'])
-            request.session['q3SN'] = str(form.cleaned_data['q3SN'])
-            request.session['q4SN'] = str(form.cleaned_data['q4SN'])
-            request.session['q5SN'] = str(form.cleaned_data['q5SN'])
+            request.session['q1EI'] = getAnswerPos(str(form.cleaned_data['q1EI']))
+            request.session['q2EI'] = getAnswerPos(str(form.cleaned_data['q2EI']))
+            request.session['q3EI'] = getAnswerPos(str(form.cleaned_data['q3EI']))
+            request.session['q4EI'] = getAnswerPos(str(form.cleaned_data['q4EI']))
+            request.session['q5EI'] = getAnswerPos(str(form.cleaned_data['q5EI']))
+            request.session['q1SN'] = getAnswerPos(str(form.cleaned_data['q1SN']))
+            request.session['q2SN'] = getAnswerPos(str(form.cleaned_data['q2SN']))
+            request.session['q3SN'] = getAnswerPos(str(form.cleaned_data['q3SN']))
+            request.session['q4SN'] = getAnswerPos(str(form.cleaned_data['q4SN']))
+            request.session['q5SN'] = getAnswerPos(str(form.cleaned_data['q5SN']))
             qform.user = user
             qform.save()
             return redirect('Level_Up_App:personalityquestionaire2')
@@ -88,45 +86,60 @@ def personalityquestionaire2(request):
     user = User.objects.get(name=username)
     form_dict = {'username': username, 'personalityquestionaire2': form}
     if request.method == 'POST':
-        form = PersonalityQuestionaire1Form(request.POST)
+        form = PersonalityQuestionaire2Form(request.POST)
         if form.is_valid():
             qform = form.save(commit=False)
-            request.session['q1TF'] = str(form.cleaned_data['q1TF'])
-            request.session['q2TF'] = str(form.cleaned_data['q2TF'])
-            request.session['q3TF'] = str(form.cleaned_data['q3TF'])
-            request.session['q4TF'] = str(form.cleaned_data['q4TF'])
-            request.session['q5TF'] = str(form.cleaned_data['q5TF'])
-            request.session['q1JP'] = str(form.cleaned_data['q1JP'])
-            request.session['q2JP'] = str(form.cleaned_data['q2JP'])
-            request.session['q3JP'] = str(form.cleaned_data['q3JP'])
-            request.session['q4JP'] = str(form.cleaned_data['q4JP'])
-            request.session['q5JP'] = str(form.cleaned_data['q5JP'])
+            request.session['q1TF'] = getAnswerPos(str(form.cleaned_data['q1TF']))
+            request.session['q2TF'] = getAnswerPos(str(form.cleaned_data['q2TF']))
+            request.session['q3TF'] = getAnswerPos(str(form.cleaned_data['q3TF']))
+            request.session['q4TF'] = getAnswerPos(str(form.cleaned_data['q4TF']))
+            request.session['q5TF'] = getAnswerPos(str(form.cleaned_data['q5TF']))
+            request.session['q1JP'] = getAnswerPos(str(form.cleaned_data['q1JP']))
+            request.session['q2JP'] = getAnswerPos(str(form.cleaned_data['q2JP']))
+            request.session['q3JP'] = getAnswerPos(str(form.cleaned_data['q3JP']))
+            request.session['q4JP'] = getAnswerPos(str(form.cleaned_data['q4JP']))
+            request.session['q5JP'] = getAnswerPos(str(form.cleaned_data['q5JP']))
             qform.user = user
             qform.save()
-            return redirect('Level_Up_App:results')
+            return redirect('Level_Up_App:chooseendpoint')
         else:
-            print("Error: PersonalityQuestionaire1Form invalid")
+            print("Error: PersonalityQuestionaire2Form invalid")
     return render(request, 'Level_Up_App/personalityquestionaire2.html', context=form_dict)
 
+def chooseendpoint(request):
+    ex_in = [request.session['q1EI'], request.session['q2EI'], request.session['q3EI'], request.session['q4EI'], request.session['q5EI']]
+    se_in = [request.session['q1SN'], request.session['q2SN'], request.session['q3SN'], request.session['q4SN'], request.session['q5SN']]
+    th_fe = [request.session['q1TF'], request.session['q2TF'], request.session['q3TF'], request.session['q4TF'], request.session['q5TF']]
+    ju_pe = [request.session['q1JP'], request.session['q2JP'], request.session['q3JP'], request.session['q4JP'], request.session['q5JP']]
+    print(ex_in)
+    print(se_in)
+    print(th_fe)
+    print(ju_pe)
+    recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe)) # Cannot direct assign, async operations of Experta is too slow
+    recEndGoalList = recommendedjob
+    print(recEndGoalList)
+    btn_dict = {'endpoint1': recEndGoalList[0]} #, 'endpoint2': recEndGoalList[1]} #TODO: Index out of range
+    if request.method == 'POST':
+        if request.POST.get('endptbtn1'):
+            print('endptbtn1: '+ str(recEndGoalList[0]))
+            request.session['careerendpoint'] = recEndGoalList[0]
+            # else:
+            #     print('endptbtn2: '+ str(recEndGoalList[1]))
+            #     request.session['careerendpoint'] = recEndGoalList[1]
+            return redirect('Level_Up_App:results')
+    return render(request, 'Level_Up_App/chooseendpoint.html', btn_dict)
+
 def result(request):
+    careerendpoint = ''
     currPos = request.session['currPosition']
-    careerendpoint = 'CIO' #TODO
-
-    # Filter job recommendations
-    skillset = list()
-    skillset.append('C++')
-    jobs = getJobRecommendation(skillset)
-
-    skills = list()
-    skills.append('ARTIFICIAL INTELLIGENCE')
-    skills.append('MACHINE LEARNING')
-    skills.append('DEEP LEARNING')
-    # Filter course recommendation
-    courses = filtercourse(skills)
-
+    endGoal = request.session['careerendpoint']
     user = request.session['username']
+    userCompetence = getJobCompetency(currPos)
+    courses = getCourses(currPos, endGoal)
+    jobs = getJobs(currPos)
+
     result_dict = {'username': user,
-                'careerendpoint': careerendpoint,
+                'careerendpoint': str(careerendpoint),
                 'courses': courses,
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
@@ -487,6 +500,21 @@ def aStarsearchwrapper(currPos, endpt):
     careerkg = cpkg.getCareerKnowledgeMap()
     careerph = cpkg.getCareerPathHeuristic()
     return searchCareerPath(careerkg, careerph, currPos, endpt)
+
+def getAnswerPos(answerStr):
+    print(answerStr)
+    paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
+    return str(paPos.pos)
+
+def getCourses(currPos, endGoal):
+    print('CP: ' + str(currPos) + ' EG: ' + str(endGoal))
+    competenceList = elicit_competence_with_endgoal(currPos, endGoal)
+    return getCourseRecommendation(competenceList)
+
+def getJobs(currPos):
+    print('CP: ' + str(currPos))
+    competenceList = elicit_competence_without_endgoal(currPos)
+    return getJobCompetency(competenceList)
 
 class PersonaType(Enum):
     CURIOUS_EXPLORER = 1
