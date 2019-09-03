@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "Level_Up_App\base.html" %}
+{% load static %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    <h2>Personality Questionaire</h2>
+  </div>
+  <h4>Dear {{username}}, please complete the questionaire below (20 of 20)</h4><br>
+  <form class="personalityquestionaire2" action="" method="post">
+    {% csrf_token %}
+    {{personalityquestionaire2.as_p}}
+    <input type="submit" class="btn btn-primary" name="" value="Submit">
+  </form>
+</div>
+{% endblock %}
