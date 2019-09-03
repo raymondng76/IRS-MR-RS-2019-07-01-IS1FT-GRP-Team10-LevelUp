@@ -118,7 +118,7 @@ def chooseendpoint(request):
     recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe)) # Cannot direct assign, async operations of Experta is too slow
     recEndGoalList = recommendedjob
     print(recEndGoalList)
-    btn_dict = {'endpoint1': recEndGoalList[0]} #, 'endpoint2': recEndGoalList[1]} #TODO: Index out of range
+    btn_dict = {'endpoint1': str(recEndGoalList[0])} #, 'endpoint2': recEndGoalList[1]} #TODO: Index out of range
     if request.method == 'POST':
         if request.POST.get('endptbtn1'):
             print('endptbtn1: '+ str(recEndGoalList[0]))
@@ -502,19 +502,16 @@ def aStarsearchwrapper(currPos, endpt):
     return searchCareerPath(careerkg, careerph, currPos, endpt)
 
 def getAnswerPos(answerStr):
-    print(answerStr)
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
     return str(paPos.pos)
 
 def getCourses(currPos, endGoal):
-    print('CP: ' + str(currPos) + ' EG: ' + str(endGoal))
     competenceList = elicit_competence_with_endgoal(currPos, endGoal)
     return getCourseRecommendation(competenceList)
 
 def getJobs(currPos):
-    print('CP: ' + str(currPos))
-    competenceList = elicit_competence_without_endgoal(currPos)
-    return getJobCompetency(competenceList)
+    competenceList = getListofCompetencetoAskUserWithoutCRoadMap(currPos)
+    return getJobRecommendation(competenceList)
 
 class PersonaType(Enum):
     CURIOUS_EXPLORER = 1
