@@ -1,5 +1,5 @@
 from django import forms
-from Level_Up_App.models import User, Questionaire, EducationLevel, CareerPosition, PersonalityQuestion, PersonalityAnswer, PersonalityQuestionaire1, PersonalityQuestionaire2
+from Level_Up_App.models import User, Questionaire, EducationLevel, CareerPosition, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition, PersonalityQuestionaire1, PersonalityQuestionaire2
 
 def getPersonalityQuestionStr(tag):
     pq = PersonalityQuestion.objects.get(tag=tag)
@@ -7,8 +7,11 @@ def getPersonalityQuestionStr(tag):
 
 def getPersonalityAnswerPair(tag):
     pq = PersonalityQuestion.objects.get(tag=tag)
-    ans = PersonalityAnswer.objects.get(tag=pq)
-    return (('opt1', str(ans.answer1)), ('opt2', str(ans.answer2)))
+    papair = PersonalityAnswerPair.objects.get(tag=pq)
+    allAns = papair.answer.all()
+    ansA = allAns.get(pos='a')
+    ansB = allAns.get(pos='b')
+    return ((ansA.answer, ansA.answer), (ansB.answer, ansB.answer))
 
 class NewUserForm(forms.ModelForm):
     class Meta():

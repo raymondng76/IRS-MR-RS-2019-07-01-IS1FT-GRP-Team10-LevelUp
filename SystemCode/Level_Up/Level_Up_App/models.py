@@ -206,11 +206,16 @@ class PersonalityQuestion(models.Model):
     def __str__(self):
         return """Tag: [{}], Question: [{}]""".format(self.tag, self.question)
 
-class PersonalityAnswer(models.Model):
-    tag = models.ForeignKey(PersonalityQuestion, on_delete=models.CASCADE)
-    answer1 = models.CharField(max_length=100)
-    answer2 = models.CharField(max_length=100)
+class PersonalityAnswerPosition(models.Model):
+    pos = models.CharField(max_length=100)
+    answer = models.CharField(max_length=100)
 
     def __str__(self):
-        return """Tag: [{}], Answer1: [{}],
-        Answer2: [{}]""".format(self.tag.tag, self.answer1, self.answer2)
+        return """Pos: [{}], Answer: [{}]""".format(self.pos, self.answer)
+        
+class PersonalityAnswerPair(models.Model):
+    tag = models.ForeignKey(PersonalityQuestion, on_delete=models.CASCADE)
+    answer = models.ManyToManyField(PersonalityAnswerPosition)
+
+    def __str__(self):
+        return """Tag: [{}], Answer: [{}]""".format(self.tag.tag, self.answer)
