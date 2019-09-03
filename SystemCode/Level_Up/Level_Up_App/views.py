@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from django.views.decorators.csrf import csrf_exempt
-from Level_Up_App.forms import NewUserForm, QuestionaireForm
+from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender, recommendedcourses
 from Level_Up_App.jobrecommendationrules import getJobRecommendation
@@ -48,10 +48,65 @@ def questionaire(request):
                 request.session['careerendpoint'] = 'Chief Information Officer'
             qform.user = user
             qform.save()
-            return redirect('Level_Up_App:results')
+            if request.session['careeraspiration'] == True:
+                return redirect('Level_Up_App:results')
+            else:
+                return redirect('Level_Up_App:personalityquestionaire1')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
+
+def personalityquestionaire1(request):
+    form = PersonalityQuestionaire1Form()
+    username = request.session['username']
+    user = User.objects.get(name=username)
+    form_dict = {'username': username, 'personalityquestionaire1': form}
+    if request.method == 'POST':
+        form = PersonalityQuestionaire1Form(request.POST)
+        if form.is_valid():
+            qform = form.save(commit=False)
+            request.session['q1EI'] = str(form.cleaned_data['q1EI'])
+            request.session['q2EI'] = str(form.cleaned_data['q2EI'])
+            request.session['q3EI'] = str(form.cleaned_data['q3EI'])
+            request.session['q4EI'] = str(form.cleaned_data['q4EI'])
+            request.session['q5EI'] = str(form.cleaned_data['q5EI'])
+            request.session['q1SN'] = str(form.cleaned_data['q1SN'])
+            request.session['q2SN'] = str(form.cleaned_data['q2SN'])
+            request.session['q3SN'] = str(form.cleaned_data['q3SN'])
+            request.session['q4SN'] = str(form.cleaned_data['q4SN'])
+            request.session['q5SN'] = str(form.cleaned_data['q5SN'])
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:personalityquestionaire2')
+        else:
+            print("Error: PersonalityQuestionaire1Form invalid")
+    return render(request, 'Level_Up_App/personalityquestionaire1.html', context=form_dict)
+
+def personalityquestionaire2(request):
+    form = PersonalityQuestionaire2Form()
+    username = request.session['username']
+    user = User.objects.get(name=username)
+    form_dict = {'username': username, 'personalityquestionaire2': form}
+    if request.method == 'POST':
+        form = PersonalityQuestionaire1Form(request.POST)
+        if form.is_valid():
+            qform = form.save(commit=False)
+            request.session['q1TF'] = str(form.cleaned_data['q1TF'])
+            request.session['q2TF'] = str(form.cleaned_data['q2TF'])
+            request.session['q3TF'] = str(form.cleaned_data['q3TF'])
+            request.session['q4TF'] = str(form.cleaned_data['q4TF'])
+            request.session['q5TF'] = str(form.cleaned_data['q5TF'])
+            request.session['q1JP'] = str(form.cleaned_data['q1JP'])
+            request.session['q2JP'] = str(form.cleaned_data['q2JP'])
+            request.session['q3JP'] = str(form.cleaned_data['q3JP'])
+            request.session['q4JP'] = str(form.cleaned_data['q4JP'])
+            request.session['q5JP'] = str(form.cleaned_data['q5JP'])
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:results')
+        else:
+            print("Error: PersonalityQuestionaire1Form invalid")
+    return render(request, 'Level_Up_App/personalityquestionaire2.html', context=form_dict)
 
 def result(request):
     currPos = request.session['currPosition']

@@ -11,5 +11,7 @@ urlpatterns = [
     path('jobrecommend/', views.jobrecommendresult, name='jobrecommend'),
     path('signup/', views.signup, name='signup'),
     path('signupthanks/', views.signupthanks, name='signupthanks'),
-    path('chatbot/', views.chatbot, name='chatbot')
+    path('chatbot/', views.chatbot, name='chatbot'),
+    path('personalityquestionaire1/', views.personalityquestionaire1, name='personalityquestionaire1'),
+    path('personalityquestionaire2/', views.personalityquestionaire2, name='personalityquestionaire2')
 ]
