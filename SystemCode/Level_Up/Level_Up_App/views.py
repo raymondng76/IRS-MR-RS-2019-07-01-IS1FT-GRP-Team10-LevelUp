@@ -144,14 +144,6 @@ def result(request):
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
 
-def signup(request):
-    if request.method == 'POST':
-        return redirect('Level_Up_App/signupthanks')
-    return render(request, 'Level_Up_App/signup.html')
-
-def signupthanks(request):
-    return render(request, 'Level_Up_App/signupthanks.html')
-
 def courserecommendresult(request):
     courses = filtercourse(skills)
     courses_dict = {'courses': courses}
