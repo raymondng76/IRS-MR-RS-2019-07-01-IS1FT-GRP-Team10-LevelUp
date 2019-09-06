@@ -144,16 +144,6 @@ def result(request):
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
 
-def courserecommendresult(request):
-    courses = filtercourse(skills)
-    courses_dict = {'courses': courses}
-    return render(request, 'Level_Up_App/courserecommend.html', courses_dict)
-
-def jobrecommendresult(request):
-    pass
-
-def chatbot(request):
-    return render(request, 'Level_Up_App/chatbot.html')
 # ************************
 # DialogFlow block : START
 # ************************
