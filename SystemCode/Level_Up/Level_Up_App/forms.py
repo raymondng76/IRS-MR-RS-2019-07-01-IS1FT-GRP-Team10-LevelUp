@@ -22,6 +22,15 @@ class NewUserForm(forms.ModelForm):
             'careeraspiration' : 'Do you have a career you aspire to? ',
         }
 
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        try:
+            match = User.objects.get(name=name)
+        except User.DoesNotExist:
+            return name
+        print('validation error')
+        raise forms.ValidationError('This username already exists, please enter a new username.')
+
 class QuestionaireForm(forms.ModelForm):
     eduLevel = forms.ModelChoiceField(label='Highest education level', queryset=EducationLevel.objects.all())
     currPosition = forms.ModelChoiceField(label='Current working position', queryset=CareerPosition.objects.all())

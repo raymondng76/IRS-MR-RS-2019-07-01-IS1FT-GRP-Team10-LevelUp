@@ -18,7 +18,7 @@ from Level_Up_App.mbti_qna import *
 
 # Create your views here.
 def index(request):
-    form = NewUserForm()
+    form = NewUserForm(request.POST or None)
     form_dict = {'userForm': form}
     if request.method == 'POST':
         form = NewUserForm(request.POST)
@@ -27,8 +27,6 @@ def index(request):
             request.session['careeraspiration'] = form.cleaned_data['careeraspiration']
             form.save()
             return redirect('Level_Up_App:questionaire')
-        else:
-            return redirect('Level_Up_App:index')
     return render(request, 'Level_Up_App/index.html', form_dict)
 
 def questionaire(request):
