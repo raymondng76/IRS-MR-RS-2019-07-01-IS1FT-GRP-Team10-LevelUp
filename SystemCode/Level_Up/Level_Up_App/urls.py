@@ -9,5 +9,6 @@ urlpatterns = [
     path('results/', views.result, name='results'),
     path('personalityquestionaire1/', views.personalityquestionaire1, name='personalityquestionaire1'),
     path('personalityquestionaire2/', views.personalityquestionaire2, name='personalityquestionaire2'),
-    path('chooseendpoint/', views.chooseendpoint, name='chooseendpoint')
+    path('chooseendpoint/', views.chooseendpoint, name='chooseendpoint'),
+    path('usercareergoal/', views.usercareergoal, name='usercareergoal')
 ]

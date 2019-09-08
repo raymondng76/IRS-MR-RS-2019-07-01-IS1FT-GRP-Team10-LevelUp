@@ -15,11 +15,17 @@ class Questionaire(models.Model):
     eduLevel = models.CharField(max_length=200)
     yearsExp = models.IntegerField(default=0)
     currPosition = models.CharField(max_length=200)
-    careerGoal = models.CharField(max_length=200)
 
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
-                Current position: [{}], Have career goal: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, self.careerGoal)
+                Current position: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition)
+
+class UserCareerGoal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    careerGoal = models.CharField(max_length=200)
+
+    def __str__(self):
+        return """User: [{}], careerGoal: [{}]""".format(self.user, self.careerGoal)
 
 class PersonalityQuestionaire1(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -212,7 +218,7 @@ class PersonalityAnswerPosition(models.Model):
 
     def __str__(self):
         return """Pos: [{}], Answer: [{}]""".format(self.pos, self.answer)
-        
+
 class PersonalityAnswerPair(models.Model):
     tag = models.ForeignKey(PersonalityQuestion, on_delete=models.CASCADE)
     answer = models.ManyToManyField(PersonalityAnswerPosition)
