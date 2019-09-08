@@ -15,9 +15,9 @@ def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
     candidateCareerPaths = []
     #currentNode = currentJobTitle
 
-    num_iterations = 50
-    GenerationSize = 10
-    PathLength = 7
+    num_iterations = 100
+    GenerationSize = 100
+    PathLength = 10
     mutation_prob = 5
     Generation = []
     penalty_cost = 100
@@ -166,9 +166,11 @@ def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
     print(candidateCareerPaths)
 
     lowerestCost = 1000
+    
     for i in range(len(candidateCareerPaths)):
         if candidateCareerPaths[i][0] < lowerestCost:
             lowerestCost = candidateCareerPaths[i][0]
             bestSolutionIndex = i
 
-    print("Shortest Career Path: ", candidateCareerPaths[bestSolutionIndex])
+    if(len(candidateCareerPaths) > 0):
+        print("Shortest Career Path: ", candidateCareerPaths[bestSolutionIndex])
