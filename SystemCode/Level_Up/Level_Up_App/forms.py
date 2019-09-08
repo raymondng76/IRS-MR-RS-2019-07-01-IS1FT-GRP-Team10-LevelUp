@@ -1,5 +1,5 @@
 from django import forms
-from Level_Up_App.models import User, Questionaire, EducationLevel, CareerPosition, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition, PersonalityQuestionaire1, PersonalityQuestionaire2
+from Level_Up_App.models import User, Questionaire, EducationLevel, CareerPosition, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition, PersonalityQuestionaire1, PersonalityQuestionaire2, UserCareerGoal
 
 def getPersonalityQuestionStr(tag):
     pq = PersonalityQuestion.objects.get(tag=tag)
@@ -31,16 +31,21 @@ class NewUserForm(forms.ModelForm):
         print('validation error')
         raise forms.ValidationError('This username already exists, please enter a new username.')
 
+class UserCareerGoalForm(forms.ModelForm):
+    careerGoal = forms.ModelChoiceField(label='Your aspired career goal', queryset=CareerPosition.objects.all())
+    class Meta():
+        model = UserCareerGoal
+        fields = ['careerGoal']
+        labels = {
+            'careerGoal': 'Your aspired career goal:'
+        }
+
 class QuestionaireForm(forms.ModelForm):
     eduLevel = forms.ModelChoiceField(label='Highest education level', queryset=EducationLevel.objects.all())
     currPosition = forms.ModelChoiceField(label='Current working position', queryset=CareerPosition.objects.all())
-    careerGoal = forms.ModelChoiceField(label='Desired career goal', queryset=CareerPosition.objects.all())
     class Meta():
         model = Questionaire
-        fields = ['eduLevel', 'yearsExp', 'currPosition', 'careerGoal']
-        labels = {
-            'yearsExp' : 'Years of working experience',
-        }
+        fields = ['eduLevel', 'yearsExp', 'currPosition']
 
 class PersonalityQuestionaire1Form(forms.ModelForm):
     q1EI = forms.ChoiceField(label=getPersonalityQuestionStr('q1EI'), choices=getPersonalityAnswerPair('q1EI'))
