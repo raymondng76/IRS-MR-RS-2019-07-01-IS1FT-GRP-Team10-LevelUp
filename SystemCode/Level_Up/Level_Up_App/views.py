@@ -144,10 +144,10 @@ def chooseendpoint(request):
 def result(request):
     careerendpoint = ''
     currPos = request.session['currPosition']
-    endGoal = request.session['careerendpoint']
+    careerendpoint = request.session['careerendpoint']
     user = request.session['username']
     userCompetence = getJobCompetency(currPos)
-    courses = getCourses(currPos, endGoal)
+    courses = getCourses(currPos, careerendpoint)
     jobs = getJobs(currPos)
 
     result_dict = {'username': user,
