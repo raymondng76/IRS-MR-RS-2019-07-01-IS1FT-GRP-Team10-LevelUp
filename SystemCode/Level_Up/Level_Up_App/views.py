@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from django.views.decorators.csrf import csrf_exempt
-from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form
+from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form, UserCareerGoalForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender, recommendedcourses
 from Level_Up_App.jobrecommendationrules import getJobRecommendation
@@ -18,7 +18,7 @@ from Level_Up_App.mbti_qna import *
 
 # Create your views here.
 def index(request):
-    form = NewUserForm()
+    form = NewUserForm(request.POST or None)
     form_dict = {'userForm': form}
     if request.method == 'POST':
         form = NewUserForm(request.POST)
@@ -27,8 +27,6 @@ def index(request):
             request.session['careeraspiration'] = form.cleaned_data['careeraspiration']
             form.save()
             return redirect('Level_Up_App:questionaire')
-        else:
-            return redirect('Level_Up_App:index')
     return render(request, 'Level_Up_App/index.html', form_dict)
 
 def questionaire(request):
@@ -41,18 +39,32 @@ def questionaire(request):
         if form.is_valid():
             qform = form.save(commit=False)
             request.session['currPosition'] = str(form.cleaned_data['currPosition'])
-            # if user checks the have career aspiration checkbox
-            if request.session['careeraspiration'] == True:
-                request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
             qform.user = user
             qform.save()
             if request.session['careeraspiration'] == True:
-                return redirect('Level_Up_App:results')
+                return redirect('Level_Up_App:usercareergoal')
             else:
                 return redirect('Level_Up_App:personalityquestionaire1')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
+
+def usercareergoal(request):
+    form = UserCareerGoalForm()
+    username = request.session['username']
+    user = User.objects.get(name=username)
+    form_dict = {'username': username, 'usercareergoal': form}
+    if request.method == 'POST':
+        form = UserCareerGoalForm(request.POST)
+        if form.is_valid():
+            qform = form.save(commit=False)
+            cg = str(form.cleaned_data['careerGoal'])
+            print(f'CareerGoal:{cg}')
+            request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:results')
+    return render(request, 'Level_Up_App/usercareergoal.html', context=form_dict)
 
 def personalityquestionaire1(request):
     form = PersonalityQuestionaire1Form()
@@ -132,10 +144,10 @@ def chooseendpoint(request):
 def result(request):
     careerendpoint = ''
     currPos = request.session['currPosition']
-    endGoal = request.session['careerendpoint']
+    careerendpoint = request.session['careerendpoint']
     user = request.session['username']
     userCompetence = getJobCompetency(currPos)
-    courses = getCourses(currPos, endGoal)
+    courses = getCourses(currPos, careerendpoint)
     jobs = getJobs(currPos)
 
     result_dict = {'username': user,
@@ -144,16 +156,6 @@ def result(request):
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
 
-def courserecommendresult(request):
-    courses = filtercourse(skills)
-    courses_dict = {'courses': courses}
-    return render(request, 'Level_Up_App/courserecommend.html', courses_dict)
-
-def jobrecommendresult(request):
-    pass
-
-def chatbot(request):
-    return render(request, 'Level_Up_App/chatbot.html')
 # ************************
 # DialogFlow block : START
 # ************************

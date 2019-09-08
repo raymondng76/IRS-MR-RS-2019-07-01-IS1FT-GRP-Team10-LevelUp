@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "Level_Up_App\base.html" %}
+{% load static %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Career Goal</h1>
+    </div>
+    <h4>Dear {{username}}, please select your aspired career goal below</h4>
+    <form class="usercareergoal" action="" method="post">
+      {% csrf_token %}
+      {{ usercareergoal.as_p }}
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+  </div>
+{% endblock %}

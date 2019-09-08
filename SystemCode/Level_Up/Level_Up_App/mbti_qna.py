@@ -103,82 +103,82 @@ class EndGoal(KnowledgeEngine):
 	@Rule(PersonalityList(charlist = 'ENTJ'))
 	def ENTJ(self):
 		global recommendedjob
-		recommendedjob.append("CEO")
+		recommendedjob.append("Chief Information Officer")
 
 	@Rule(PersonalityList(charlist = 'ENTP'))
 	def ENTP(self):
 		global recommendedjob
-		recommendedjob.append("Chief Information Officer")
+		recommendedjob.append("Chief Operating Officer")
 
 	@Rule(PersonalityList(charlist = 'INTP'))
 	def INTP(self):
 		global recommendedjob
-		recommendedjob.append("Chief Operating Officer")
+		recommendedjob.append("Chief Technology Officer")
 
 	@Rule(PersonalityList(charlist = 'INTJ'))
 	def INTJ(self):
 		global recommendedjob
-		recommendedjob.append("Chief Technology Officer")
+		recommendedjob.append("President")
 
 	@Rule(PersonalityList(charlist = 'ENFJ'))
 	def ENFJ(self):
 		global recommendedjob
-		recommendedjob.append("Senior Director")
+		recommendedjob.append("Vice President")
 
 	@Rule(PersonalityList(charlist = 'ENFP'))
 	def ENFP(self):
 		global recommendedjob
-		recommendedjob.append("Senior Sales Director")
+		recommendedjob.append("Senior Director")
 
 	@Rule(PersonalityList(charlist = 'INFP'))
 	def INFP(self):
 		global recommendedjob
-		recommendedjob.append("Senior Software Director")
+		recommendedjob.append("Senior Sales Director")
 
 	@Rule(PersonalityList(charlist = 'INFJ'))
 	def INFJ(self):
 		global recommendedjob
-		recommendedjob.append("Director")
+		recommendedjob.append("Senior Software Director")
 
 	@Rule(PersonalityList(charlist = 'ESFJ'))
 	def ESFJ(self):
 		global recommendedjob
-		recommendedjob.append("President")
+		recommendedjob.append("Director")
 
 	@Rule(PersonalityList(charlist = 'ESFP'))
 	def ESFP(self):
 		global recommendedjob
-		recommendedjob.append("Principal Engineer")
+		recommendedjob.append("Sales Director")
 
 	@Rule(PersonalityList(charlist = 'ISFP'))
 	def ISFP(self):
 		global recommendedjob
-		recommendedjob.append("Principal Software Engineer")
+		recommendedjob.append("Software Director")
 
 	@Rule(PersonalityList(charlist = 'ISFJ'))
 	def ISFJ(self):
 		global recommendedjob
-		recommendedjob.append("Sales Director")
+		recommendedjob.append("Senior Head")
 
 	@Rule(PersonalityList(charlist = 'ESTJ'))
 	def ESTJ(self):
 		global recommendedjob
-		recommendedjob.append("Software Director")
+		recommendedjob.append("Senior Project Manager")
 
 	@Rule(PersonalityList(charlist = 'ESTP'))
 	def ESTP(self):
 		global recommendedjob
-		recommendedjob.append("Vice President")
+		recommendedjob.append("Senior Technical Manager")
 
 	@Rule(PersonalityList(charlist = 'ISTP'))
 	def ISTP(self):
 		global recommendedjob
-		recommendedjob.append("Senior Solution Architect")
+		recommendedjob.append("Senior Sales Manager")
 
 	@Rule(PersonalityList(charlist = 'ISTJ'))
 	def ISTJ(self):
 		global recommendedjob
-		recommendedjob.append("Professor")
+		recommendedjob.append("Senior Software Manager")
 
 # print(recEndGoal(personalitylist))
 # engine.declare(PersonalityList(charlist=charlist))

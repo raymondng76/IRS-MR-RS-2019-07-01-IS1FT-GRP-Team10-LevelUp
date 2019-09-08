@@ -1,8 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300);
+@import url(https://fonts.googleapis.com/css?family=Squada+One);
+
+
 h1{
   font-weight: bold;
-  color: green;
+  font-family: 'Open Sans', sans-serif;
+  color: coral;
   float: left;
 }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-image: url("../images/geo-bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 #main_img{
   float: right;
   width: 100px;
@@ -32,4 +45,47 @@ tbody{
   height: 500px;
   overflow: auto;
   align-content: center;
+}
+
+a:link{
+  color: #01AAE4;
+}
+
+/* a:visited{
+  color: #F6F6F6;
+} */
+
+a:hover{
+  color: 56CCF2;
+}
+
+#logo {
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 150px;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+  text-shadow: #EDEDED 3px 2px 0;
+  position: relative;
+}
+
+#logo:after {
+  content:"Level UP!";
+  position: absolute;
+  left: 8px;
+  top: 32px;
+}
+
+#logo:after {
+  /*background: url(https://subtlepatterns.com/patterns/crossed_stripes.png) repeat;*/
+  background-image: -webkit-linear-gradient(left top, transparent 0%, transparent 25%, #555 25%, #555 50%, transparent 50%, transparent 75%, #555 75%);
+  background-size: 4px 4px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: -5;
+  display: block;
+  text-shadow: none;
 }

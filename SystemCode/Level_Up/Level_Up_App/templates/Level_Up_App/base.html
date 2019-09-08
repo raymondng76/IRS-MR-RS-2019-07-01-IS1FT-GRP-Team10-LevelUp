@@ -3,9 +3,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Level Up!</title>
+    <title>Level Up Your Career by Understanding your Career Path</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static "Level_Up_App/css/base.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <script type="text/javascript">
       function updateID() {
         var newSrc = document.getElementById("apiid").value;
@@ -14,15 +15,20 @@
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light">
       <div class="navbar-nav container">
-        <a class="navbar-brand" href="{% url 'Level_Up_App:index' %}">Level UP!</a>
-        <a class="navbar-link navbar-right" href="{% url 'admin:index' %}">Admin Console</a>
+        <a class="navbar-brand" id ="logo" href="{% url 'Level_Up_App:index' %}">Level UP!</a>
+        <a class="navbar-link navbar-right" href="{% url 'admin:index' %}">ADMIN</a>
       </div>
     </nav>
     <div class="container">
       {% block body_block %}
       {% endblock %}
+    </div>
+    <div class="container">
+      <div>Icons made by <a href="https://www.flaticon.com/authors/vaadin" title="Vaadin">Vaadin</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+      <div>Background vector created by <a href="https://www.freepik.com/free-photos-vectors/background">kjpargeter</a>from <a href="https://www.freepik.com/" title="Freepik">www.freepik.com</a></div>
+      
     </div>
   </body>
 </html>
