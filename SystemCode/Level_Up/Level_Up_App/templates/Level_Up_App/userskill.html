@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "Level_Up_App\base.html" %}
+{% load static %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h2>User Skills</h2>
+    </div>
+    <h4>Dear {{username}}, identify the skills you heve below (Up to 10 skills)</h4>
+    <form class="userskill" method="post" action="">
+      {% csrf_token %}
+      {{ userSkillForm.as_p }}
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+  </div>
+{% endblock %}

@@ -10,5 +10,6 @@ urlpatterns = [
     path('personalityquestionaire1/', views.personalityquestionaire1, name='personalityquestionaire1'),
     path('personalityquestionaire2/', views.personalityquestionaire2, name='personalityquestionaire2'),
     path('chooseendpoint/', views.chooseendpoint, name='chooseendpoint'),
-    path('usercareergoal/', views.usercareergoal, name='usercareergoal')
+    path('usercareergoal/', views.usercareergoal, name='usercareergoal'),
+    path('userskill/', views.userSkill, name='userskill')
 ]
