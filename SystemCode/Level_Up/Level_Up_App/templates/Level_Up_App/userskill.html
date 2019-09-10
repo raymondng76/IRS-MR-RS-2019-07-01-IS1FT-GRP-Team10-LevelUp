@@ -6,7 +6,7 @@
     <div class="jumbotron">
       <h2>User Skills</h2>
     </div>
-    <h4>Dear {{username}}, identify the skills you heve below (Up to 10 skills)</h4>
+    <h4>Dear {{username}}, please identify the skills you have in the form below (Up to 10 skills)</h4><br>
     <form class="userskill" method="post" action="">
       {% csrf_token %}
       {{ userSkillForm.as_p }}
