@@ -45,7 +45,7 @@ def questionaire(request):
             if request.session['careeraspiration'] == True:
                 return redirect('Level_Up_App:usercareergoal')
             else:
-                return redirect('Level_Up_App:personalityquestionaire1')
+                return redirect('Level_Up_App:userskill')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
@@ -122,7 +122,7 @@ def chooseendpoint(request):
             # else:
             #     print('endptbtn2: '+ str(recEndGoalList[1]))
             #     request.session['careerendpoint'] = recEndGoalList[1]
-            return redirect('Level_Up_App:results')
+            return redirect('Level_Up_App:userskil')
     return render(request, 'Level_Up_App/chooseendpoint.html', btn_dict)
 
 def result(request):
@@ -130,7 +130,12 @@ def result(request):
     currPos = request.session['currPosition']
     careerendpoint = request.session['careerendpoint']
     user = request.session['username']
-    userCompetence = getJobCompetency(currPos)
+    skill_dict = {}
+    for i in range(1, 11):
+        skill = str(request.session['skill'+str(i)])
+        if skill != 'None':
+            skill_dict['skill'+str(i)] = skill
+    bestCost, bestPath = getBestPath(currPos, endpt)
     courses = getCourses(currPos, careerendpoint)
     jobs = getJobs(currPos)
 
@@ -154,9 +159,9 @@ def usercareergoal(request):
             request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
             qform.user = user
             qform.save()
-            return redirect('Level_Up_App:results')
+            return redirect('Level_Up_App:userskill')
     return render(request, 'Level_Up_App/usercareergoal.html', context=form_dict)
-    
+
 def userSkill(request):
     form = UserSkillForm()
     username = request.session['username']
@@ -528,6 +533,23 @@ def gaSearchWrapper(currPos, endpt):
     careerkg = cpkg.getCareerKnowledgeMap()
     careerph = cpkg.getCareerPathHeuristic()
     return gaSearchCareerPath(careerkg, careerph, currPos, endpt)
+
+def getBestPath(currPos, endpt):
+    gaPathCost, gaPath = gaSearchWrapper(currPos, endpt)
+    asPathCost, asPath = aStarsearchwrapper(currPos, endpt)
+    if gaPathCost == null or gaPath == null:
+        return asPathCost, asPath
+    if asPathCost == null or asPath == null:
+        return gaPathCost, gaPath
+    bestCost = 0
+    bestPath = []
+    if gaPathCost > asPathCost:
+        bestCost = gaPathCost
+        bestPath = gaPath
+    else:
+        bestCost = asPathCost
+        bestPath = asPath
+    return (bestCost, bestPath)
 
 def getAnswerPos(answerStr):
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
