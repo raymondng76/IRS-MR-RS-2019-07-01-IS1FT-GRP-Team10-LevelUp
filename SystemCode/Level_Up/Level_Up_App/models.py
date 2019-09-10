@@ -225,3 +225,19 @@ class PersonalityAnswerPair(models.Model):
 
     def __str__(self):
         return """Tag: [{}], Answer: [{}]""".format(self.tag.tag, self.answer)
+
+class UserSkill(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    skill1 = models.CharField(max_length=256, default=None, null=True)
+    skill2 = models.CharField(max_length=256, default=None, null=True)
+    skill3 = models.CharField(max_length=256, default=None, null=True)
+    skill4 = models.CharField(max_length=256, default=None, null=True)
+    skill5 = models.CharField(max_length=256, default=None, null=True)
+    skill6 = models.CharField(max_length=256, default=None, null=True)
+    skill7 = models.CharField(max_length=256, default=None, null=True)
+    skill8 = models.CharField(max_length=256, default=None, null=True)
+    skill9 = models.CharField(max_length=256, default=None, null=True)
+    skill10 = models.CharField(max_length=256, default=None, null=True)
+
+    def __str__(self):
+        return """User: [{}], Skill1: [{}]""".format(self.user, self.skill1)

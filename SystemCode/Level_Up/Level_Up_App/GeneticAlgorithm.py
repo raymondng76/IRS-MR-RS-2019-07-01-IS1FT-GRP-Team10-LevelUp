@@ -163,10 +163,10 @@ def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
 
         #print("Mutate",MutatedGen)
 
-    print(candidateCareerPaths)
+    # print(candidateCareerPaths)
 
     lowerestCost = 1000
-    
+
     for i in range(len(candidateCareerPaths)):
         if candidateCareerPaths[i][0] < lowerestCost:
             lowerestCost = candidateCareerPaths[i][0]
@@ -174,3 +174,5 @@ def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
 
     if(len(candidateCareerPaths) > 0):
         print("Shortest Career Path: ", candidateCareerPaths[bestSolutionIndex])
+
+    return (candidateCareerPaths[bestSolutionIndex][0], candidateCareerPaths[bestSolutionIndex][1:])

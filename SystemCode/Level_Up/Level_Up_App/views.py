@@ -4,12 +4,13 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, TemplateView, ListView, DetailView, FormView
 from django.views.decorators.csrf import csrf_exempt
-from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form, UserCareerGoalForm
+from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form, UserCareerGoalForm, UserSkillForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender, recommendedcourses
 from Level_Up_App.jobrecommendationrules import getJobRecommendation
 from Level_Up_App.careerknowledgegraph import CareerPathKnowledgeGraph
 from Level_Up_App.CareerPathASTARSearch import searchCareerPath
+from Level_Up_App.GeneticAlgorithm import gaSearchCareerPath
 from Level_Up_App.library.df_response_lib import *
 import json
 from enum import Enum
@@ -44,27 +45,10 @@ def questionaire(request):
             if request.session['careeraspiration'] == True:
                 return redirect('Level_Up_App:usercareergoal')
             else:
-                return redirect('Level_Up_App:personalityquestionaire1')
+                return redirect('Level_Up_App:userskill')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
-
-def usercareergoal(request):
-    form = UserCareerGoalForm()
-    username = request.session['username']
-    user = User.objects.get(name=username)
-    form_dict = {'username': username, 'usercareergoal': form}
-    if request.method == 'POST':
-        form = UserCareerGoalForm(request.POST)
-        if form.is_valid():
-            qform = form.save(commit=False)
-            cg = str(form.cleaned_data['careerGoal'])
-            print(f'CareerGoal:{cg}')
-            request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
-            qform.user = user
-            qform.save()
-            return redirect('Level_Up_App:results')
-    return render(request, 'Level_Up_App/usercareergoal.html', context=form_dict)
 
 def personalityquestionaire1(request):
     form = PersonalityQuestionaire1Form()
@@ -138,7 +122,7 @@ def chooseendpoint(request):
             # else:
             #     print('endptbtn2: '+ str(recEndGoalList[1]))
             #     request.session['careerendpoint'] = recEndGoalList[1]
-            return redirect('Level_Up_App:results')
+            return redirect('Level_Up_App:userskil')
     return render(request, 'Level_Up_App/chooseendpoint.html', btn_dict)
 
 def result(request):
@@ -146,7 +130,12 @@ def result(request):
     currPos = request.session['currPosition']
     careerendpoint = request.session['careerendpoint']
     user = request.session['username']
-    userCompetence = getJobCompetency(currPos)
+    skill_dict = {}
+    for i in range(1, 11):
+        skill = str(request.session['skill'+str(i)])
+        if skill != 'None':
+            skill_dict['skill'+str(i)] = skill
+    bestCost, bestPath = getBestPath(currPos, endpt)
     courses = getCourses(currPos, careerendpoint)
     jobs = getJobs(currPos)
 
@@ -155,6 +144,50 @@ def result(request):
                 'courses': courses,
                 'jobs': jobs}
     return render(request, 'Level_Up_App/results.html', result_dict)
+
+def usercareergoal(request):
+    form = UserCareerGoalForm()
+    username = request.session['username']
+    user = User.objects.get(name=username)
+    form_dict = {'username': username, 'usercareergoal': form}
+    if request.method == 'POST':
+        form = UserCareerGoalForm(request.POST)
+        if form.is_valid():
+            qform = form.save(commit=False)
+            cg = str(form.cleaned_data['careerGoal'])
+            print(f'CareerGoal:{cg}')
+            request.session['careerendpoint'] = str(form.cleaned_data['careerGoal'])
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:userskill')
+    return render(request, 'Level_Up_App/usercareergoal.html', context=form_dict)
+
+def userSkill(request):
+    form = UserSkillForm()
+    username = request.session['username']
+    user = User.objects.get(name=username)
+    form_dict = {'username': username, 'userSkillForm': form}
+    if request.method == 'POST':
+        form = UserSkillForm(request.POST)
+        if form.is_valid:
+            qform = form.save(commit=False)
+            request.session['skill1'] = str(form.cleaned_data['skill1'])
+            request.session['skill2'] = str(form.cleaned_data['skill2'])
+            request.session['skill3'] = str(form.cleaned_data['skill3'])
+            request.session['skill4'] = str(form.cleaned_data['skill4'])
+            request.session['skill5'] = str(form.cleaned_data['skill5'])
+            request.session['skill6'] = str(form.cleaned_data['skill6'])
+            request.session['skill7'] = str(form.cleaned_data['skill7'])
+            request.session['skill8'] = str(form.cleaned_data['skill8'])
+            request.session['skill9'] = str(form.cleaned_data['skill9'])
+            request.session['skill10'] = str(form.cleaned_data['skill10'])
+            qform.user = user
+            qform.save()
+            return redirect('Level_Up_App:results')
+        else:
+            print("Error: UserSkillForm invalid")
+    return render(request, 'Level_Up_App/userskill.html', form_dict)
+
 
 # ************************
 # DialogFlow block : START
@@ -494,6 +527,29 @@ def aStarsearchwrapper(currPos, endpt):
     careerkg = cpkg.getCareerKnowledgeMap()
     careerph = cpkg.getCareerPathHeuristic()
     return searchCareerPath(careerkg, careerph, currPos, endpt)
+
+def gaSearchWrapper(currPos, endpt):
+    cpkg = CareerPathKnowledgeGraph()
+    careerkg = cpkg.getCareerKnowledgeMap()
+    careerph = cpkg.getCareerPathHeuristic()
+    return gaSearchCareerPath(careerkg, careerph, currPos, endpt)
+
+def getBestPath(currPos, endpt):
+    gaPathCost, gaPath = gaSearchWrapper(currPos, endpt)
+    asPathCost, asPath = aStarsearchwrapper(currPos, endpt)
+    if gaPathCost == null or gaPath == null:
+        return asPathCost, asPath
+    if asPathCost == null or asPath == null:
+        return gaPathCost, gaPath
+    bestCost = 0
+    bestPath = []
+    if gaPathCost > asPathCost:
+        bestCost = gaPathCost
+        bestPath = gaPath
+    else:
+        bestCost = asPathCost
+        bestPath = asPath
+    return (bestCost, bestPath)
 
 def getAnswerPos(answerStr):
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
