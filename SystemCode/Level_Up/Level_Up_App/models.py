@@ -15,10 +15,11 @@ class Questionaire(models.Model):
     eduLevel = models.CharField(max_length=200)
     yearsExp = models.IntegerField(default=0)
     currPosition = models.CharField(max_length=200)
+    preferManagement = models.BooleanField(default=False)
 
     def __str__(self):
         return """User: [{}], Highest Edu Level: [{}], Years of working exp: [{}],
-                Current position: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition)
+                Current position: [{}], Management?: [{}]""".format(self.user.name, self.eduLevel, str(self.yearsExp), self.currPosition, str(self.preferManagement))
 
 class UserCareerGoal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
