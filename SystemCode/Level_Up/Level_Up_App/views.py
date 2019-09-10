@@ -130,14 +130,13 @@ def result(request):
     currPos = request.session['currPosition']
     careerendpoint = request.session['careerendpoint']
     user = request.session['username']
-    skill_dict = {}
+    skilllist = []
     for i in range(1, 11):
         skill = str(request.session['skill'+str(i)])
         if skill != 'None':
-            skill_dict['skill'+str(i)] = skill
-    bestCost, bestPath = getBestPath(currPos, endpt)
-    courses = getCourses(currPos, careerendpoint)
-    jobs = getJobs(currPos)
+            skilllist.append(skill)
+    courses = getCourseRecommendation(currPos, careerendpoint, skilllist)
+    jobs = getJobsRecommendation(currPos, careerendpoint, skilllist)
 
     result_dict = {'username': user,
                 'careerendpoint': str(careerendpoint),
@@ -555,13 +554,24 @@ def getAnswerPos(answerStr):
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
     return str(paPos.pos)
 
-def getCourses(currPos, endGoal):
-    competenceList = elicit_competence_with_endgoal(currPos, endGoal)
-    return getCourseRecommendation(competenceList)
+def getCourseRecommendation(currPos, endGoal, skillset):
+    egCareerPos = CareerPosition.objects.get(name=endGoal)
+    egCareerSkills = CareerSkills.objects.get(careerpos=egCareerPos)
+    egSkillList = []
+    for skill in egCareerSkills.skillRequired.all():
+        egSkillList.append(skill)
+    userSkillList = []
+    for skill in skillset:
+        userSkillList.append(Skill.objects.get(name=skill))
+    remainList = [skills for skills in egSkillList if skills not in userSkillList]
+    return filtercourse(remainList)
 
-def getJobs(currPos):
-    competenceList = getListofCompetencetoAskUserWithoutCRoadMap(currPos)
-    return getJobRecommendation(competenceList)
+def getJobsRecommendation(currPos, endGoal, skillset):
+    if not skillset:
+        return list()
+    bestCost, bestPath = getBestPath(currPos, endGoal)
+    nextPos = bestPath[1]
+    return getMatchJobWithPosition(skillset, nextPos)
 
 class PersonaType(Enum):
     CURIOUS_EXPLORER = 1
