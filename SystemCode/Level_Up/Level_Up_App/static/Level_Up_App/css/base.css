@@ -11,9 +11,10 @@ h1{
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background-image: url("../images/geo-bg.jpg");
+  background-image: url("../images/abstract-bg.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
 #main_img{

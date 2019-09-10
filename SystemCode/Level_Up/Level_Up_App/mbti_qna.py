@@ -65,7 +65,9 @@ class Personality(KnowledgeEngine):
 		global personalitylist
 		personalitylist.append('J')
 
+
 def mbti(aList_ex_in, aList_se_in, aList_th_fe, aList_ju_pe):
+	# INTEGRATION DONE
 	ex_in = scoreInputs(aList_ex_in)
 	se_in = scoreInputs(aList_se_in)
 	th_fe = scoreInputs(aList_th_fe)
@@ -80,105 +82,162 @@ def mbti(aList_ex_in, aList_se_in, aList_th_fe, aList_ju_pe):
 	engine.run()  # Run it!
 	return personalitylist
 
-# print(mbti(testList_ex_in, testList_se_in, testList_th_fe, testList_ju_pe))
+# FOR TESTING ONLY
+print(mbti(testList_ex_in, testList_se_in, testList_th_fe, testList_ju_pe))
 
 recommendedjob = []
 
-def recEndGoal(personalitylist):
-	charlist = str(''.join(personalitylist))
-	print(charlist)
-	engine = EndGoal()
-	engine.reset() # Prepare the engine for the execution.
-	engine.declare(PersonalityList(charlist = charlist))
-	engine.run() # Run it!
-	return recommendedjob
+### COMMENT OUT FOR TESTING ###
+# def recEndGoal(personalitylist):
+# 	charlist = str(''.join(personalitylist))
+# 	print(charlist)
+# 	engine = EndGoal()
+# 	engine.reset() # Prepare the engine for the execution.
+# 	engine.declare(PersonalityList(charlist = charlist))
+# 	engine.run() # Run it!
+# 	return recommendedjob
 
+preference = "YES"
+
+def recScore(personalitylist, pref):
+	recscore = 0
+	prefscore = 0
+	totalscore = 0
+	for persona in personalitylist:
+		if persona == "E":
+			recscore = recscore + 3
+		elif persona == "N":
+			recscore = recscore + 3
+		elif persona == "T":
+			recscore = recscore + 3
+		elif persona == "J":
+			recscore = recscore
+		elif persona == "I":
+			recscore = recscore - 2
+		elif persona == "S":
+			recscore = recscore - 2
+		elif persona == "F":
+			recscore = recscore - 2
+		else:
+			recscore = recscore
+	if pref == "YES":
+		prefscore = prefscore + 9
+	else:
+		prefscore = prefscore - 6
+	totalscore = 0.4 * recscore + 0.6 * prefscore
+	return totalscore
+
+print(recScore(personalitylist, preference))
 
 class PersonalityList(Fact):
-	charlist = Field(str)
+	#charlist = Field(str)
+	totalscore = Field(int)
 	pass
 
 class EndGoal(KnowledgeEngine):
+	# USING A RECOMMEND SCORE INSTEAD
+	@Rule(PersonalityList(totalscore=P(lambda totalscore: totalscore > 2.1)))
+	def mgmt(self):
+		global recommendedjob
+		recommendedjob.append(["Chief Information Officer","Chief Operating Officer","Chief Technology Officer"])
+	
+	@Rule(PersonalityList(totalscore < 2.1))
+	def not_mgmt(self):
+		global recommendedjob
+		recommendedjob.append(["Senior Director","Senior Sales Director","Senior Software Director"])
+	
+	
+	
+	
 	# Passing Personality List to get Job Recommendation
-	@Rule(PersonalityList(charlist = 'ENTJ'))
-	def ENTJ(self):
-		global recommendedjob
-		recommendedjob.append("Chief Information Officer")
+	# @Rule(PersonalityList(charlist = 'ENTJ'))
+	# def ENTJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Chief Information Officer")
 
-	@Rule(PersonalityList(charlist = 'ENTP'))
-	def ENTP(self):
-		global recommendedjob
-		recommendedjob.append("Chief Operating Officer")
+	# @Rule(PersonalityList(charlist = 'ENTP'))
+	# def ENTP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Chief Operating Officer")
 
-	@Rule(PersonalityList(charlist = 'INTP'))
-	def INTP(self):
-		global recommendedjob
-		recommendedjob.append("Chief Technology Officer")
+	# @Rule(PersonalityList(charlist = 'INTP'))
+	# def INTP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Chief Technology Officer")
 
-	@Rule(PersonalityList(charlist = 'INTJ'))
-	def INTJ(self):
-		global recommendedjob
-		recommendedjob.append("President")
+	# @Rule(PersonalityList(charlist = 'INTJ'))
+	# def INTJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("President")
 
-	@Rule(PersonalityList(charlist = 'ENFJ'))
-	def ENFJ(self):
-		global recommendedjob
-		recommendedjob.append("Vice President")
+	# @Rule(PersonalityList(charlist = 'ENFJ'))
+	# def ENFJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Vice President")
 
-	@Rule(PersonalityList(charlist = 'ENFP'))
-	def ENFP(self):
-		global recommendedjob
-		recommendedjob.append("Senior Director")
+	# @Rule(PersonalityList(charlist = 'ENFP'))
+	# def ENFP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Director")
 
-	@Rule(PersonalityList(charlist = 'INFP'))
-	def INFP(self):
-		global recommendedjob
-		recommendedjob.append("Senior Sales Director")
+	# @Rule(PersonalityList(charlist = 'INFP'))
+	# def INFP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Sales Director")
 
-	@Rule(PersonalityList(charlist = 'INFJ'))
-	def INFJ(self):
-		global recommendedjob
-		recommendedjob.append("Senior Software Director")
+	# @Rule(PersonalityList(charlist = 'INFJ'))
+	# def INFJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Software Director")
 
-	@Rule(PersonalityList(charlist = 'ESFJ'))
-	def ESFJ(self):
-		global recommendedjob
-		recommendedjob.append("Director")
+	# @Rule(PersonalityList(charlist = 'ESFJ'))
+	# def ESFJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Director")
 
-	@Rule(PersonalityList(charlist = 'ESFP'))
-	def ESFP(self):
-		global recommendedjob
-		recommendedjob.append("Sales Director")
+	# @Rule(PersonalityList(charlist = 'ESFP'))
+	# def ESFP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Sales Director")
 
-	@Rule(PersonalityList(charlist = 'ISFP'))
-	def ISFP(self):
-		global recommendedjob
-		recommendedjob.append("Software Director")
+	# @Rule(PersonalityList(charlist = 'ISFP'))
+	# def ISFP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Software Director")
 
-	@Rule(PersonalityList(charlist = 'ISFJ'))
-	def ISFJ(self):
-		global recommendedjob
-		recommendedjob.append("Senior Head")
+	# @Rule(PersonalityList(charlist = 'ISFJ'))
+	# def ISFJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Head")
 
-	@Rule(PersonalityList(charlist = 'ESTJ'))
-	def ESTJ(self):
-		global recommendedjob
-		recommendedjob.append("Senior Project Manager")
+	# @Rule(PersonalityList(charlist = 'ESTJ'))
+	# def ESTJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Project Manager")
 
-	@Rule(PersonalityList(charlist = 'ESTP'))
-	def ESTP(self):
-		global recommendedjob
-		recommendedjob.append("Senior Technical Manager")
+	# @Rule(PersonalityList(charlist = 'ESTP'))
+	# def ESTP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Technical Manager")
 
-	@Rule(PersonalityList(charlist = 'ISTP'))
-	def ISTP(self):
-		global recommendedjob
-		recommendedjob.append("Senior Sales Manager")
+	# @Rule(PersonalityList(charlist = 'ISTP'))
+	# def ISTP(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Sales Manager")
 
-	@Rule(PersonalityList(charlist = 'ISTJ'))
-	def ISTJ(self):
-		global recommendedjob
-		recommendedjob.append("Senior Software Manager")
+	# @Rule(PersonalityList(charlist = 'ISTJ'))
+	# def ISTJ(self):
+	# 	global recommendedjob
+	# 	recommendedjob.append("Senior Software Manager")
 
-# print(recEndGoal(personalitylist))
-# engine.declare(PersonalityList(charlist=charlist))
+def recEndGoal(personalitylist):
+	recscore = recScore(personalitylist)
+	print(recscore)
+	engine = EndGoal()
+	engine.reset() # Prepare the engine for the execution.
+	engine.declare(PersonalityList(totalscore = recscore))
+	engine.run() # Run it!
+	return recommendedjob
+
+# FOR TESTING ONLY
+print(recEndGoal(personalitylist))

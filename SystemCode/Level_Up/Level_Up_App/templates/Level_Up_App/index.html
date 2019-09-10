@@ -2,12 +2,13 @@
 {% extends "Level_Up_App\base.html" %}
 {% load static %}
 {% block body_block %}
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Welcome to Level Up!</h1>
-    </div>
+  <div class="row bg-light text-dark">
+    <h1>Welcome to Level Up!</h1>
+    <div class="w-100"></div>
     <h4>Welcome to the Level Up! career recommendation agent.</h4>
-    <h4>To begin, start by entering your name below.</h4><br>
+    <div class="w-100"></div>
+    <h4>To begin, start by entering your name below.</h4>
+    <div class="w-100"></div>
     {% if userForm.errors %}
         <strong>{{ error|escape }}</strong>
     {% endif %}
