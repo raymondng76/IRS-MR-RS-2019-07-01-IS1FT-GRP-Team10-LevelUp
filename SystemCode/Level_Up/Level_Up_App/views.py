@@ -115,7 +115,7 @@ def chooseendpoint(request):
     print(ju_pe)
     recEndGoalList = recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe), preference) # Cannot direct assign, async operations of Experta is too slow
     # recEndGoalList = recommendedjob
-    print(recEndGoalList[0])
+    print(str(recEndGoalList[0][0]))
     btn_dict = {'endpoint1': str(recEndGoalList[0][0]), 'endpoint2': str(recEndGoalList[0][1]), 'endpoint3': str(recEndGoalList[0][2])}
     if request.method == 'POST':
         if request.POST.get('endptbtn1'):
