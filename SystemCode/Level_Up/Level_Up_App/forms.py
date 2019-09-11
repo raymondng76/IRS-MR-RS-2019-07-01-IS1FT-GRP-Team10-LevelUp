@@ -45,7 +45,10 @@ class QuestionaireForm(forms.ModelForm):
     currPosition = forms.ModelChoiceField(label='Current working position', queryset=CareerPosition.objects.all())
     class Meta():
         model = Questionaire
-        fields = ['eduLevel', 'yearsExp', 'currPosition']
+        fields = ['eduLevel', 'yearsExp', 'currPosition', 'preferManagement']
+        labels = {
+            'preferManagement' : 'Do you prefer a management role?',
+        }
 
 class PersonalityQuestionaire1Form(forms.ModelForm):
     q1EI = forms.ChoiceField(label=getPersonalityQuestionStr('q1EI'), choices=getPersonalityAnswerPair('q1EI'))

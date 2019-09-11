@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Level_Up_App.forms import NewUserForm, QuestionaireForm, PersonalityQuestionaire1Form, PersonalityQuestionaire2Form, UserCareerGoalForm, UserSkillForm
 from Level_Up_App.models import User, Questionaire, Course, Job, Skill, CareerPathMap, CareerSkills, ChatbotVar, PersonalityQuestion, PersonalityAnswerPair, PersonalityAnswerPosition
 from Level_Up_App.courserecommendationrules import SkillGapsFact, CourseRecommender, recommendedcourses
-from Level_Up_App.jobrecommendationrules import getJobRecommendation
+from Level_Up_App.jobrecommendationrules import getJobRecommendation, getMatchJobWithPosition
 from Level_Up_App.careerknowledgegraph import CareerPathKnowledgeGraph
 from Level_Up_App.CareerPathASTARSearch import searchCareerPath
 from Level_Up_App.GeneticAlgorithm import gaSearchCareerPath
@@ -40,12 +40,13 @@ def questionaire(request):
         if form.is_valid():
             qform = form.save(commit=False)
             request.session['currPosition'] = str(form.cleaned_data['currPosition'])
+            request.session['preferManagement'] = str(form.cleaned_data['preferManagement'])
             qform.user = user
             qform.save()
             if request.session['careeraspiration'] == True:
                 return redirect('Level_Up_App:usercareergoal')
             else:
-                return redirect('Level_Up_App:userskill')
+                return redirect('Level_Up_App:personalityquestionaire1')
         else:
             print("Error: Questionaire form invalid!")
     return render(request, 'Level_Up_App/questionaire.html', context=form_dict)
@@ -103,6 +104,7 @@ def personalityquestionaire2(request):
     return render(request, 'Level_Up_App/personalityquestionaire2.html', context=form_dict)
 
 def chooseendpoint(request):
+    preference = request.session['preferManagement']
     ex_in = [request.session['q1EI'], request.session['q2EI'], request.session['q3EI'], request.session['q4EI'], request.session['q5EI']]
     se_in = [request.session['q1SN'], request.session['q2SN'], request.session['q3SN'], request.session['q4SN'], request.session['q5SN']]
     th_fe = [request.session['q1TF'], request.session['q2TF'], request.session['q3TF'], request.session['q4TF'], request.session['q5TF']]
@@ -111,18 +113,23 @@ def chooseendpoint(request):
     print(se_in)
     print(th_fe)
     print(ju_pe)
-    recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe)) # Cannot direct assign, async operations of Experta is too slow
-    recEndGoalList = recommendedjob
-    print(recEndGoalList)
-    btn_dict = {'endpoint1': str(recEndGoalList[0])} #, 'endpoint2': recEndGoalList[1]} #TODO: Index out of range
+    recEndGoalList = recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe), preference) # Cannot direct assign, async operations of Experta is too slow
+    # recEndGoalList = recommendedjob
+    print(recEndGoalList[0])
+    btn_dict = {'endpoint1': str(recEndGoalList[0][0]), 'endpoint2': str(recEndGoalList[0][1]), 'endpoint3': str(recEndGoalList[0][2])}
     if request.method == 'POST':
         if request.POST.get('endptbtn1'):
-            print('endptbtn1: '+ str(recEndGoalList[0]))
-            request.session['careerendpoint'] = recEndGoalList[0]
-            # else:
-            #     print('endptbtn2: '+ str(recEndGoalList[1]))
-            #     request.session['careerendpoint'] = recEndGoalList[1]
-            return redirect('Level_Up_App:userskil')
+            print('endptbtn1: ' + str(recEndGoalList[0][1]))
+            request.session['careerendpoint'] = recEndGoalList[0][1]
+            return redirect('Level_Up_App:userskill')
+        elif request.POST.get('endptbtn2'):
+            print('endptbtn2: ' + str(recEndGoalList[0][1]))
+            request.session['careerendpoint'] = recEndGoalList[0][1]
+            return redirect('Level_Up_App:userskill')
+        else:
+            print('endptbtn3: ' + str(recEndGoalList[0][2]))
+            request.session['careerendpoint'] = recEndGoalList[0][2]
+            return redirect('Level_Up_App:userskill')
     return render(request, 'Level_Up_App/chooseendpoint.html', btn_dict)
 
 def result(request):
@@ -130,14 +137,13 @@ def result(request):
     currPos = request.session['currPosition']
     careerendpoint = request.session['careerendpoint']
     user = request.session['username']
-    skill_dict = {}
+    skilllist = []
     for i in range(1, 11):
         skill = str(request.session['skill'+str(i)])
         if skill != 'None':
-            skill_dict['skill'+str(i)] = skill
-    bestCost, bestPath = getBestPath(currPos, endpt)
-    courses = getCourses(currPos, careerendpoint)
-    jobs = getJobs(currPos)
+            skilllist.append(skill)
+    courses = getCourseRecommendation(currPos, careerendpoint, skilllist)
+    jobs = getJobsRecommendation(currPos, careerendpoint, skilllist)
 
     result_dict = {'username': user,
                 'careerendpoint': str(careerendpoint),
@@ -536,10 +542,13 @@ def gaSearchWrapper(currPos, endpt):
 
 def getBestPath(currPos, endpt):
     gaPathCost, gaPath = gaSearchWrapper(currPos, endpt)
+    print(f'gaPathCost: {gaPathCost}')
     asPathCost, asPath = aStarsearchwrapper(currPos, endpt)
-    if gaPathCost == null or gaPath == null:
+    print(f'asPathCost: {asPathCost}')
+
+    if not gaPathCost or not gaPath:
         return asPathCost, asPath
-    if asPathCost == null or asPath == null:
+    if not asPathCost or not asPath:
         return gaPathCost, gaPath
     bestCost = 0
     bestPath = []
@@ -555,13 +564,26 @@ def getAnswerPos(answerStr):
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
     return str(paPos.pos)
 
-def getCourses(currPos, endGoal):
-    competenceList = elicit_competence_with_endgoal(currPos, endGoal)
-    return getCourseRecommendation(competenceList)
+def getCourseRecommendation(currPos, endGoal, skillset):
+    print(f'CurrPos: {currPos}')
+    print(f'endGoal: {endGoal}')
+    egCareerPos = CareerPosition.objects.get(name=endGoal)
+    egCareerSkills = CareerSkills.objects.get(careerpos=egCareerPos)
+    egSkillList = []
+    for skill in egCareerSkills.skillRequired.all():
+        egSkillList.append(skill)
+    userSkillList = []
+    for skill in skillset:
+        userSkillList.append(Skill.objects.get(name=skill))
+    remainList = [skills for skills in egSkillList if skills not in userSkillList]
+    return filtercourse(remainList)
 
-def getJobs(currPos):
-    competenceList = getListofCompetencetoAskUserWithoutCRoadMap(currPos)
-    return getJobRecommendation(competenceList)
+def getJobsRecommendation(currPos, endGoal, skillset):
+    if not skillset:
+        return list()
+    bestCost, bestPath = getBestPath(currPos, endGoal)
+    nextPos = bestPath[1]
+    return getMatchJobWithPosition(skillset, nextPos)
 
 class PersonaType(Enum):
     CURIOUS_EXPLORER = 1

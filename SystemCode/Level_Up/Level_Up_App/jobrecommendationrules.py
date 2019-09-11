@@ -12,6 +12,17 @@ def getMatchJob(skills):
             joblist.append(job)
     return joblist
 
+def getMatchJobWithPosition(skills, careerPos):
+    joblist = []
+    jobs = Job.objects.all()
+    careerPos = CareerPosition.objects.get(name=careerPos)
+    for job in jobs:
+        skillreq = job.skillRequired.all()
+        if matchSkills(skillreq, skills):
+            if job.name == careerPos:
+                joblist.append(job)
+    return joblist
+
 def matchSkills(list1, list2):
     result = False
     for x in list1:
