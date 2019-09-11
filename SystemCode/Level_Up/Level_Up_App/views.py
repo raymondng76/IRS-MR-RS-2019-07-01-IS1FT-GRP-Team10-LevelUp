@@ -142,13 +142,15 @@ def result(request):
         skill = str(request.session['skill'+str(i)])
         if skill != 'None':
             skilllist.append(skill)
+    bestCost, bestPath = getBestPath(currPos, careerendpoint)
     courses = getCourseRecommendation(currPos, careerendpoint, skilllist)
     jobs = getJobsRecommendation(currPos, careerendpoint, skilllist)
 
     result_dict = {'username': user,
                 'careerendpoint': str(careerendpoint),
                 'courses': courses,
-                'jobs': jobs}
+                'jobs': jobs,
+                'careerpath': bestPath}
     return render(request, 'Level_Up_App/results.html', result_dict)
 
 def usercareergoal(request):

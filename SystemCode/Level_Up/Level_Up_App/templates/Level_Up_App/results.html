@@ -10,6 +10,13 @@
       <h4>Hey {{username}}!, your recommended career aspiration is:</h4><br>
       <h1 id="careerendpoint">{{careerendpoint}}</h1><br>
     </div>
+    <div class="careerpath">
+      <br><br><br>
+      <h5>Best Career Path:</h2>
+      {% for path in careerpath %}
+        <label id="careerpath">{{path}}</label><br>
+      {% endfor %}
+    </div>
     <div class="jobsrecommend">
       {% if jobs %}
       <table class="recommendtable table table-striped table-bordered table-sm">
