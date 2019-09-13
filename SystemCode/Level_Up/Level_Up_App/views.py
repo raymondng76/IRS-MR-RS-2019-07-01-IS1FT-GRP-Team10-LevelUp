@@ -143,8 +143,8 @@ def result(request):
         if skill != 'None':
             skilllist.append(skill)
     bestCost, bestPath = getBestPath(currPos, careerendpoint)
-    courses = getCourseRecommendation(currPos, careerendpoint, skilllist)
-    jobs = getJobsRecommendation(currPos, careerendpoint, skilllist)
+    courses = getCourseRecommendation(currPos, careerendpoint, skilllist, bestPath)
+    jobs = getJobsRecommendation(currPos, careerendpoint, skilllist, bestPath)
 
     result_dict = {'username': user,
                 'careerendpoint': str(careerendpoint),
@@ -566,24 +566,26 @@ def getAnswerPos(answerStr):
     paPos = PersonalityAnswerPosition.objects.get(answer=answerStr)
     return str(paPos.pos)
 
-def getCourseRecommendation(currPos, endGoal, skillset):
-    print(f'CurrPos: {currPos}')
-    print(f'endGoal: {endGoal}')
-    egCareerPos = CareerPosition.objects.get(name=endGoal)
-    egCareerSkills = CareerSkills.objects.get(careerpos=egCareerPos)
-    egSkillList = []
-    for skill in egCareerSkills.skillRequired.all():
-        egSkillList.append(skill)
+def getCourseRecommendation(currPos, endGoal, skillset, bestPath):
+    remainPath = bestPath[1:]
+    remainSkillList = []
+    for path in remainPath:
+        cp = CareerPosition.objects.get(name=path)
+        cs = CareerSkills.objects.get(careerpos=cp)
+        for skill in cs.skillRequired.all():
+            remainSkillList.append(skill)
     userSkillList = []
     for skill in skillset:
         userSkillList.append(Skill.objects.get(name=skill))
-    remainList = [skills for skills in egSkillList if skills not in userSkillList]
-    return filtercourse(remainList)
+    remainList = [skills for skills in remainSkillList if skills not in userSkillList]
+    uSkillList = []
+    for skill in remainList:
+        uSkillList.append(str(skill))
+    return filtercourse(uSkillList)
 
-def getJobsRecommendation(currPos, endGoal, skillset):
+def getJobsRecommendation(currPos, endGoal, skillset, bestPath):
     if not skillset:
         return list()
-    bestCost, bestPath = getBestPath(currPos, endGoal)
     nextPos = bestPath[1]
     return getMatchJobWithPosition(skillset, nextPos)
 
