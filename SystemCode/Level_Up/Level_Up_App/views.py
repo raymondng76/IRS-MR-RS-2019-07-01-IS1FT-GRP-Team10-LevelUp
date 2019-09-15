@@ -105,7 +105,7 @@ def personalityquestionaire2(request):
 
 def chooseendpoint(request):
     preference = request.session['preferManagement']
-    user = request.session['username']
+    username = request.session['username']
     ex_in = [request.session['q1EI'], request.session['q2EI'], request.session['q3EI'], request.session['q4EI'], request.session['q5EI']]
     se_in = [request.session['q1SN'], request.session['q2SN'], request.session['q3SN'], request.session['q4SN'], request.session['q5SN']]
     th_fe = [request.session['q1TF'], request.session['q2TF'], request.session['q3TF'], request.session['q4TF'], request.session['q5TF']]
