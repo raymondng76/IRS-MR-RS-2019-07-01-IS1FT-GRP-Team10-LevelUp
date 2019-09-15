@@ -105,6 +105,7 @@ def personalityquestionaire2(request):
 
 def chooseendpoint(request):
     preference = request.session['preferManagement']
+    user = request.session['username']
     ex_in = [request.session['q1EI'], request.session['q2EI'], request.session['q3EI'], request.session['q4EI'], request.session['q5EI']]
     se_in = [request.session['q1SN'], request.session['q2SN'], request.session['q3SN'], request.session['q4SN'], request.session['q5SN']]
     th_fe = [request.session['q1TF'], request.session['q2TF'], request.session['q3TF'], request.session['q4TF'], request.session['q5TF']]
@@ -116,7 +117,7 @@ def chooseendpoint(request):
     recEndGoalList = recEndGoal(mbti(ex_in, se_in, th_fe, ju_pe), preference) # Cannot direct assign, async operations of Experta is too slow
     # recEndGoalList = recommendedjob
     print(str(recEndGoalList[0][0]))
-    btn_dict = {'endpoint1': str(recEndGoalList[0][0]), 'endpoint2': str(recEndGoalList[0][1]), 'endpoint3': str(recEndGoalList[0][2])}
+    btn_dict = {'username': username,'endpoint1': str(recEndGoalList[0][0]), 'endpoint2': str(recEndGoalList[0][1]), 'endpoint3': str(recEndGoalList[0][2])}
     if request.method == 'POST':
         if request.POST.get('endptbtn1'):
             print('endptbtn1: ' + str(recEndGoalList[0][1]))
