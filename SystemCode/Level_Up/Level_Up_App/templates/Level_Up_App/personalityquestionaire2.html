@@ -2,15 +2,36 @@
 {% extends "Level_Up_App\base.html" %}
 {% load static %}
 {% block body_block %}
-<div class="container">
-  <div class="jumbotron">
-    <h2>Personality Questionaire</h2>
+{% load widget_tweaks %}
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="col">
+      <p><h1 class='text-center text-warning'>Questionaire - Part 2</h1></p>
+      <p><h4 class="text-center">Dear {{username}}, please complete the questionaire below:</h4></p>
+      <p><h5 class="text-center">(20 of 20)</h5></p>
+    </div>
   </div>
-  <h4>Dear {{username}}, please complete the questionaire below (20 of 20)</h4><br>
-  <form class="personalityquestionaire2" action="" method="post">
-    {% csrf_token %}
-    {{personalityquestionaire2.as_p}}
-    <input type="submit" class="btn btn-primary" name="" value="Submit">
-  </form>
-</div>
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="form-label-group row">
+      <form class="personalityquestionaire2" action="" method="post">
+      {% csrf_token %}
+      {% comment %} {{personalityquestionaire2.as_p}} {% endcomment %}
+
+      {% for hidden in personalityquestionaire2.hidden_fields %}
+            {{ hidden }}
+      {% endfor %}
+
+      {% for field in personalityquestionaire2.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field|add_class:'form-control' }}
+          {% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+          {% endfor %}
+      </div>
+      {% endfor %}
+      
+      <input type="submit" class="btn btn-lg btn-primary btn-block" name="" value="Submit">
+      </form>
+    </div>
+  </div>
 {% endblock %}

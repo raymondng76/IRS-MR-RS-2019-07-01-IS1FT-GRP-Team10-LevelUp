@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Level Up Your Career by Understanding your Career Path</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "Level_Up_App/css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "Level_Up_App/css/base.css" %}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <script type="text/javascript">
       function updateID() {
@@ -16,22 +16,27 @@
   </head>
   <body>
   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
       <div class="container">
         <a class="navbar-brand" id ="logo" href="{% url 'Level_Up_App:index' %}">Level UP!</a>
-        <a class="navbar-link navbar-right" href="{% url 'admin:index' %}">ADMIN</a>
+        <a class="navbar-link navbar-right" href="{% url 'admin:index' %}"><p style="color:white;">ADMIN</p></a>
       </div>
     </nav>
-  
-  <div class="container">
-    {% block body_block %}
-    {% endblock %}
+  <div class='container mb-5'>
+    {% comment %} <div class="container-box"> {% endcomment %}
+      <div class="shadow p-3 mb-5 bg-white rounded-lg">
+        {% block body_block %}
+        {% endblock %}
+      </div>
+    {% comment %} </div> {% endcomment %}
   </div>
-  <div class="container">
-    <div>Icons made by <a href="https://www.flaticon.com/authors/vaadin" title="Vaadin">Vaadin</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    <div>Background vector created by <a href="https://www.freepik.com/free-photos-vectors/background">kjpargeter</a>from <a href="https://www.freepik.com/" title="Freepik">www.freepik.com</a></div>
-    <a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by freepik - www.freepik.com</a>
-  </div>
+  {% comment %} <div class="container">
+    <div class="p-1 mb-5 bg-secondary rounded">
+      <div>
+        <p class="text-white-50 text-center">Background vector created by <a href="https://www.freepik.com/free-photos-vectors/background">kjpargeter</a>from <a href="https://www.freepik.com/" title="Freepik">www.freepik.com</a></p>
+      </div>
+    </div>
+  </div> {% endcomment %}
 
   {% comment %} <!-- Material form login -->
 <div class="card">
@@ -102,5 +107,8 @@
 
 </div>
 <!-- Material form login --> {% endcomment %}
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
   </body>
 </html>

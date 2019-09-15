@@ -18,9 +18,14 @@ class NewUserForm(forms.ModelForm):
         model = User
         fields = ['name', 'careeraspiration']
         labels = {
-            'name' : 'Your name:',
-            'careeraspiration' : 'Do you have a career you aspire to? ',
+            'name' : '',
+            'careeraspiration' : 'Yes, I have a Career Aspiration!',
         }
+
+    def __init__(self, *args, **kwargs):
+        super(NewUserForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['placeholder'] = 'Your Name'
+        
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -49,6 +54,11 @@ class QuestionaireForm(forms.ModelForm):
         labels = {
             'preferManagement' : 'Do you prefer a management role?',
         }
+
+        # def __init__(self, *args, **kwargs):
+        #     super(QuestionaireForm, self).__init__(*args, **kwargs)
+        #     self.fields['eduLevel'].widget.attrs['placeholder'] = 'Highest Education Level'
+        #     self.fields['currPosition'].widget.attrs['placeholder'] = 'Current Working Position'
 
 class PersonalityQuestionaire1Form(forms.ModelForm):
     q1EI = forms.ChoiceField(label=getPersonalityQuestionStr('q1EI'), choices=getPersonalityAnswerPair('q1EI'))

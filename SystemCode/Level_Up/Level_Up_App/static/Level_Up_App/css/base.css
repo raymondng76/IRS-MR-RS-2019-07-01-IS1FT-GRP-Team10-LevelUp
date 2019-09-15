@@ -2,12 +2,12 @@
 @import url(https://fonts.googleapis.com/css?family=Squada+One);
 
 
-h1{
+/* h1{
   font-weight: bold;
   font-family: 'Open Sans', sans-serif;
   color: coral;
   float: left;
-}
+} */
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -33,14 +33,14 @@ body {
   width: 500px;
   height: 500px;
 }
-#careerendpoint{
+/* #careerendpoint{
   border: 5px outset black;
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   padding: 10px;
   margin: auto;
   align-content: center;
-}
+} */
 
 tbody{
   height: 500px;
@@ -48,18 +48,30 @@ tbody{
   align-content: center;
 }
 
-a:link{
-  color: #01AAE4;
+a {
+	font-family: 'Open Sans';
+	font-size: auto;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
 }
 
-/* a:visited{
-  color: #F6F6F6;
-} */
-
-a:hover{
-  color: 56CCF2;
+a:focus {
+	outline: none !important;
 }
 
+a:hover {
+	text-decoration: none;
+  color: #6a7dfe;
+  color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+  color: -o-linear-gradient(left, #21d4fd, #b721ff);
+  color: -moz-linear-gradient(left, #21d4fd, #b721ff);
+  color: linear-gradient(left, #21d4fd, #b721ff);
+}
 #logo {
   font-family: 'Open Sans', sans-serif;
   color: #555;
@@ -84,9 +96,22 @@ a:hover{
   /*background: url(https://subtlepatterns.com/patterns/crossed_stripes.png) repeat;*/
   background-image: -webkit-linear-gradient(left top, transparent 0%, transparent 25%, #555 25%, #555 50%, transparent 50%, transparent 75%, #555 75%);
   background-size: 4px 4px;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   z-index: -5;
   display: block;
   text-shadow: none;
+}
+
+/*----------------------------------[Decorative Elements]
+----------------------------------------*/
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }

@@ -2,15 +2,35 @@
 {% extends "Level_Up_App\base.html" %}
 {% load static %}
 {% block body_block %}
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Career Goal</h1>
+{% load widget_tweaks %}
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="col">
+      <p><h1 class='text-center text-warning'>Career Goal</h1></p>
+      <p><h4 class="text-center">Dear {{username}}, please select your aspired career goal below</h4></p>
     </div>
-    <h4>Dear {{username}}, please select your aspired career goal below</h4><br>
-    <form class="usercareergoal" action="" method="post">
-      {% csrf_token %}
-      {{ usercareergoal.as_p }}
-      <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
+  </div>
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="form-label-group row">
+      <form class="usercareergoal" action="" method="post">
+        {% csrf_token %}
+        {% comment %} {{ usercareergoal.as_p }} {% endcomment %}
+
+        {% for hidden in usercareergoal.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+
+        {% for field in usercareergoal.visible_fields %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% for error in field.errors %}
+              <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
+      </form>
+    </div>
   </div>
 {% endblock %}
