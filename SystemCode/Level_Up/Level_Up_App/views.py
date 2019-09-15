@@ -120,8 +120,8 @@ def chooseendpoint(request):
     btn_dict = {'username': username,'endpoint1': str(recEndGoalList[0][0]), 'endpoint2': str(recEndGoalList[0][1]), 'endpoint3': str(recEndGoalList[0][2])}
     if request.method == 'POST':
         if request.POST.get('endptbtn1'):
-            print('endptbtn1: ' + str(recEndGoalList[0][1]))
-            request.session['careerendpoint'] = recEndGoalList[0][1]
+            print('endptbtn1: ' + str(recEndGoalList[0][0]))
+            request.session['careerendpoint'] = recEndGoalList[0][0]
             return redirect('Level_Up_App:userskill')
         elif request.POST.get('endptbtn2'):
             print('endptbtn2: ' + str(recEndGoalList[0][1]))
