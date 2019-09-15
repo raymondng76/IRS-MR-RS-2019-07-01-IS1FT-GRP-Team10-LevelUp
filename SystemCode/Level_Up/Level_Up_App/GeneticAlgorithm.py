@@ -1,4 +1,4 @@
-
+import time
 import random
 
 def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
@@ -171,7 +171,7 @@ def gaSearchCareerPath(careergraph, yearsExp, currjobtitle, careerendpoint):
         if candidateCareerPaths[i][0] < lowerestCost:
             lowerestCost = candidateCareerPaths[i][0]
             bestSolutionIndex = i
-
+    time.sleep(1) #This is to prevent accessing candidateCareerPaths before bestSolutionIndex is set
     if(len(candidateCareerPaths) > 0):
         print("Shortest Career Path: ", candidateCareerPaths[bestSolutionIndex])
 
