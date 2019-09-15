@@ -25,6 +25,7 @@ SECRET_KEY = '@m#*)4u7o1^6hofbixr3z*z+xyj=2%npjr=^kl2n^lj65wk^zh'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '511d940f.ngrok.io',
     '127.0.0.1',
     'localhost'
     ]
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'Level_Up_App'
 ]
 
