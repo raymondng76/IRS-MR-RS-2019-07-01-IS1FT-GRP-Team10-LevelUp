@@ -2,15 +2,37 @@
 {% extends "Level_Up_App\base.html" %}
 {% load static %}
 {% block body_block %}
-  <div class="container">
-    <div class="jumbotron">
-      <h2>User Skills</h2>
+{% load widget_tweaks %}
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="col">
+      <p><h1 class='text-center text-warning'>User Skills</h1></p>
+      <p><h4 class="text-center">Dear {{username}}, please share with us the skills you have below:</h4></p>
+      <p><h5 class="text-center">(Up to 10 skills)</h5></p>
     </div>
-    <h4>Dear {{username}}, please identify the skills you have in the form below (Up to 10 skills)</h4><br>
-    <form class="userskill" method="post" action="">
-      {% csrf_token %}
-      {{ userSkillForm.as_p }}
-      <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
   </div>
+  <div class="row bg-white text-dark d-flex justify-content-center">
+    <div class="form-label-group row">
+      <form class="userskill" method="post" action="">
+        {% csrf_token %}
+        {% comment %} {{ userSkillForm.as_p }} {% endcomment %}
+
+        {% for hidden in userSkillForm.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+
+        {% for field in userSkillForm.visible_fields %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% for error in field.errors %}
+              <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
+      </form>
+    </div>
+  </div>
+
 {% endblock %}
