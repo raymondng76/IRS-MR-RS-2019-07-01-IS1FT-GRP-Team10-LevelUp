@@ -73,8 +73,6 @@ def personalityquestionaire1(request):
             qform.user = user
             qform.save()
             return redirect('Level_Up_App:personalityquestionaire2')
-        else:
-            print("Error: PersonalityQuestionaire1Form invalid")
     return render(request, 'Level_Up_App/personalityquestionaire1.html', context=form_dict)
 
 def personalityquestionaire2(request):
@@ -523,7 +521,10 @@ def filtercourse(skills):
     engine.reset()
     engine.declare(SkillGapsFact(skills=skills))
     engine.run()
-    return recommendedcourses
+    recCourses = recommendedcourses
+    if len(recCourses) > 5:
+        recCourses = recCourses[:5]
+    return recCourses
 
 def processIncomingSkillset(skillset):
     userSkill=list()

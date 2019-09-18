@@ -11,7 +11,7 @@ def getPersonalityAnswerPair(tag):
     allAns = papair.answer.all()
     ansA = allAns.get(pos='a')
     ansB = allAns.get(pos='b')
-    return ((ansA.answer, ansA.answer), (ansB.answer, ansB.answer))
+    return (('-----', '-----'), (ansA.answer, ansA.answer), (ansB.answer, ansB.answer))
 
 class NewUserForm(forms.ModelForm):
     class Meta():
@@ -25,7 +25,7 @@ class NewUserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(NewUserForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = 'Your Name'
-        
+
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -55,11 +55,6 @@ class QuestionaireForm(forms.ModelForm):
             'preferManagement' : 'Do you prefer a management role?',
         }
 
-        # def __init__(self, *args, **kwargs):
-        #     super(QuestionaireForm, self).__init__(*args, **kwargs)
-        #     self.fields['eduLevel'].widget.attrs['placeholder'] = 'Highest Education Level'
-        #     self.fields['currPosition'].widget.attrs['placeholder'] = 'Current Working Position'
-
 class PersonalityQuestionaire1Form(forms.ModelForm):
     q1EI = forms.ChoiceField(label=getPersonalityQuestionStr('q1EI'), choices=getPersonalityAnswerPair('q1EI'))
     q2EI = forms.ChoiceField(label=getPersonalityQuestionStr('q2EI'), choices=getPersonalityAnswerPair('q2EI'))
@@ -75,6 +70,86 @@ class PersonalityQuestionaire1Form(forms.ModelForm):
         model = PersonalityQuestionaire1
         fields = ['q1EI', 'q2EI', 'q3EI', 'q4EI', 'q5EI', 'q1SN', 'q2SN', 'q3SN', 'q4SN', 'q5SN']
 
+    def clean_q1EI(self):
+        select = self.cleaned_data.get('q1EI')
+        if select != '-----':
+            return select
+        else:
+            print('q1EI error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q2EI(self):
+        select = self.cleaned_data.get('q2EI')
+        if select != '-----':
+            return select
+        else:
+            print('q2EI error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q3EI(self):
+        select = self.cleaned_data.get('q3EI')
+        if select != '-----':
+            return select
+        else:
+            print('q3EI error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q4EI(self):
+        select = self.cleaned_data.get('q4EI')
+        if select != '-----':
+            return select
+        else:
+            print('q4EI error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q5EI(self):
+        select = self.cleaned_data.get('q5EI')
+        if select != '-----':
+            return select
+        else:
+            print('q5EI error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q1SN(self):
+        select = self.cleaned_data.get('q1SN')
+        if select != '-----':
+            return select
+        else:
+            print('q1SN error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q2SN(self):
+        select = self.cleaned_data.get('q2SN')
+        if select != '-----':
+            return select
+        else:
+            print('q2SN error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q3SN(self):
+        select = self.cleaned_data.get('q3SN')
+        if select != '-----':
+            return select
+        else:
+            print('q3SN error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q4SN(self):
+        select = self.cleaned_data.get('q4SN')
+        if select != '-----':
+            return select
+        else:
+            print('q4SN error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q5SN(self):
+        select = self.cleaned_data.get('q5SN')
+        if select != '-----':
+            return select
+        else:
+            print('q5SN error')
+            raise forms.ValidationError('Please select valid options.')
+
 class PersonalityQuestionaire2Form(forms.ModelForm):
     q1TF = forms.ChoiceField(label=getPersonalityQuestionStr('q1TF'), choices=getPersonalityAnswerPair('q1TF'))
     q2TF = forms.ChoiceField(label=getPersonalityQuestionStr('q2TF'), choices=getPersonalityAnswerPair('q2TF'))
@@ -89,6 +164,86 @@ class PersonalityQuestionaire2Form(forms.ModelForm):
     class Meta():
         model = PersonalityQuestionaire2
         fields = ['q1TF', 'q2TF', 'q3TF', 'q4TF', 'q5TF', 'q1JP', 'q2JP', 'q3JP', 'q4JP', 'q5JP']
+
+    def clean_q1TF(self):
+        select = self.cleaned_data.get('q1TF')
+        if select != '-----':
+            return select
+        else:
+            print('q1TF error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q2TF(self):
+        select = self.cleaned_data.get('q2TF')
+        if select != '-----':
+            return select
+        else:
+            print('q2TF error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q3TF(self):
+        select = self.cleaned_data.get('q3TF')
+        if select != '-----':
+            return select
+        else:
+            print('q3TF error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q4TF(self):
+        select = self.cleaned_data.get('q4TF')
+        if select != '-----':
+            return select
+        else:
+            print('q4TF error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q5TF(self):
+        select = self.cleaned_data.get('q5TF')
+        if select != '-----':
+            return select
+        else:
+            print('q5TF error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q1JP(self):
+        select = self.cleaned_data.get('q1JP')
+        if select != '-----':
+            return select
+        else:
+            print('q1JP error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q2JP(self):
+        select = self.cleaned_data.get('q2JP')
+        if select != '-----':
+            return select
+        else:
+            print('q2JP error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q3JP(self):
+        select = self.cleaned_data.get('q3JP')
+        if select != '-----':
+            return select
+        else:
+            print('q3JP error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q4JP(self):
+        select = self.cleaned_data.get('q4JP')
+        if select != '-----':
+            return select
+        else:
+            print('q4JP error')
+            raise forms.ValidationError('Please select valid options.')
+
+    def clean_q5JP(self):
+        select = self.cleaned_data.get('q5JP')
+        if select != '-----':
+            return select
+        else:
+            print('q5JP error')
+            raise forms.ValidationError('Please select valid options.')
 
 class UserSkillForm(forms.ModelForm):
     skill1 = forms.ModelChoiceField(label='Skill 1', queryset=Skill.objects.all(), required=False)
