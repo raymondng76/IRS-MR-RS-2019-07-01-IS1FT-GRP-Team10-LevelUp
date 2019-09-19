@@ -37,7 +37,7 @@ class NewUserForm(forms.ModelForm):
         raise forms.ValidationError('This username already exists, please enter a new username.')
 
 class UserCareerGoalForm(forms.ModelForm):
-    careerGoal = forms.ModelChoiceField(label='Your aspired career goal', queryset=CareerPosition.objects.all())
+    careerGoal = forms.ModelChoiceField(label='Your aspired career goal', queryset=CareerPosition.objects.order_by('name'))
     class Meta():
         model = UserCareerGoal
         fields = ['careerGoal']
@@ -47,7 +47,7 @@ class UserCareerGoalForm(forms.ModelForm):
 
 class QuestionaireForm(forms.ModelForm):
     eduLevel = forms.ModelChoiceField(label='Highest education level', queryset=EducationLevel.objects.all())
-    currPosition = forms.ModelChoiceField(label='Current working position', queryset=CareerPosition.objects.all())
+    currPosition = forms.ModelChoiceField(label='Current working position', queryset=CareerPosition.objects.order_by('name'))
     class Meta():
         model = Questionaire
         fields = ['eduLevel', 'yearsExp', 'currPosition', 'preferManagement']
@@ -246,16 +246,16 @@ class PersonalityQuestionaire2Form(forms.ModelForm):
             raise forms.ValidationError('Please select valid options.')
 
 class UserSkillForm(forms.ModelForm):
-    skill1 = forms.ModelChoiceField(label='Skill 1', queryset=Skill.objects.all(), required=False)
-    skill2 = forms.ModelChoiceField(label='Skill 2', queryset=Skill.objects.all(), required=False)
-    skill3 = forms.ModelChoiceField(label='Skill 3', queryset=Skill.objects.all(), required=False)
-    skill4 = forms.ModelChoiceField(label='Skill 4', queryset=Skill.objects.all(), required=False)
-    skill5 = forms.ModelChoiceField(label='Skill 5', queryset=Skill.objects.all(), required=False)
-    skill6 = forms.ModelChoiceField(label='Skill 6', queryset=Skill.objects.all(), required=False)
-    skill7 = forms.ModelChoiceField(label='Skill 7', queryset=Skill.objects.all(), required=False)
-    skill8 = forms.ModelChoiceField(label='Skill 8', queryset=Skill.objects.all(), required=False)
-    skill9 = forms.ModelChoiceField(label='Skill 9', queryset=Skill.objects.all(), required=False)
-    skill10 = forms.ModelChoiceField(label='Skill 10', queryset=Skill.objects.all(), required=False)
+    skill1 = forms.ModelChoiceField(label='Skill 1', queryset=Skill.objects.order_by('name'), required=False)
+    skill2 = forms.ModelChoiceField(label='Skill 2', queryset=Skill.objects.order_by('name'), required=False)
+    skill3 = forms.ModelChoiceField(label='Skill 3', queryset=Skill.objects.order_by('name'), required=False)
+    skill4 = forms.ModelChoiceField(label='Skill 4', queryset=Skill.objects.order_by('name'), required=False)
+    skill5 = forms.ModelChoiceField(label='Skill 5', queryset=Skill.objects.order_by('name'), required=False)
+    skill6 = forms.ModelChoiceField(label='Skill 6', queryset=Skill.objects.order_by('name'), required=False)
+    skill7 = forms.ModelChoiceField(label='Skill 7', queryset=Skill.objects.order_by('name'), required=False)
+    skill8 = forms.ModelChoiceField(label='Skill 8', queryset=Skill.objects.order_by('name'), required=False)
+    skill9 = forms.ModelChoiceField(label='Skill 9', queryset=Skill.objects.order_by('name'), required=False)
+    skill10 = forms.ModelChoiceField(label='Skill 10', queryset=Skill.objects.order_by('name'), required=False)
     class Meta():
         model = UserSkill
         fields = ['skill1', 'skill2', 'skill3', 'skill4', 'skill5', 'skill6', 'skill7', 'skill8', 'skill9', 'skill10']
