@@ -12,7 +12,7 @@ The Level-Up Application connects employees, employers and training providers. I
 | :------------ |:---------------:| :-----| :-----|
 | Alfred Tay Wenjie | A0198541W | Business case development, high level solution and data flow design, Career Movement Knowledge Representation design, implementation of ASTAR Search and Genetic Algorithm, Video, Report. | |
 | Kenneth Goh Chia Wei | A0198544N | Career end goals recommender implementation using rules and fuzzy logic, built user interface and interactions, LinkedIn mining, knowledge acquiring for MBTI to Career Roadmap. | |
-| Dominic Tan Heng Han | A0198502B | | |
+| Tan Heng Han | A0198502B | Data mining, Knowledge Discovery and Acquisition using Association Rule Learning, Manual Extraction and Expert Interview, Database Integration, User Test Guide. User Survey and Report | |
 | Wang Zilong | A0198523W | Solution design, data mining, knowledge acquisition by natural language processing and machine learning, database implementation, report | |
 | Raymond Ng Boon Cheong | A0198543R | System architecture design, system integration, Django server, database design and implementation, job and course recommender, user guide | |
 
