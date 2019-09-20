@@ -3,18 +3,18 @@
 
 ---
 ## SECTION 2 : EXECUTIVE SUMMARY / PAPER ABSTRACT
-
+The Level-Up Application connects employees, employers and training providers. It helps employees discover their career aspirations and maps out a career path for them. It matches employees to open job postings and recommends relevant training courses to users of the application. The backend system enabling Level-Up’s functionality is an Intelligent Reasoning System made up of multiple integrated modules performing Knowledge Discovery, Business Rules Reasoning and Career Path Optimisation. User testing was carried out with 13 test users and the feedbacks received has validated the business value of the Level-Up Application. 
 
 ---
 ## SECTION 3 : CREDITS / PROJECT CONTRIBUTION
 
 | Official Full Name  | Student ID (MTech Applicable)  | Work Items (Who Did What) | Email (Optional) |
 | :------------ |:---------------:| :-----| :-----|
-| Alfred Tay Wenjie | | | |
-| Kenneth Goh Chia Wei | | | |
-| Dominic Tan Heng Han | | | |
-| Wang Zilong | | | |
-| Raymond Ng Boon Cheong | | | |
+| Alfred Tay Wenjie | A0198541W | Business case development, high level solution and data flow design, Career Movement Knowledge Representation design, implementation of ASTAR Search and Genetic Algorithm, Video, Report. | |
+| Kenneth Goh Chia Wei | A0198544N | Career end goals recommender implementation using rules and fuzzy logic, built user interface and interactions, LinkedIn mining, knowledge acquiring for MBTI to Career Roadmap. | |
+| Dominic Tan Heng Han | A0198502B | | |
+| Wang Zilong | A0198523W | Solution design, data mining, knowledge acquisition by natural language processing and machine learning, database implementation, report | |
+| Raymond Ng Boon Cheong | A0198543R | System architecture design, system integration, Django server, database design and implementation, job and course recommender, user guide | |
 
 ---
 ## SECTION 4 : VIDEO OF SYSTEM MODELLING & USE CASE DEMO
