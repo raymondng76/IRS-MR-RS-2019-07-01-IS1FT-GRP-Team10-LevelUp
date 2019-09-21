@@ -24,5 +24,5 @@ The Level-Up Application connects employees, employers and training providers. I
 [User Guide](https://github.com/raymondng76/IRS-MR-RS-2019-07-01-IS1FT-GRP-Team10-LevelUp/blob/master/UserGuide/Team%2010%20LevelUp%20User%20Guide.pdf)
 ---
 ## SECTION 6 : PROJECT REPORT / PAPER
-[Project Report]()
+[Project Report](https://github.com/raymondng76/IRS-MR-RS-2019-07-01-IS1FT-GRP-Team10-LevelUp/blob/master/ProjectReport/Team%2010%20Level%20Up%20Report%20-%20Final.pdf)
 ---
