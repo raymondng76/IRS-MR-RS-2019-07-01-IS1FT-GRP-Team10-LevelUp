@@ -18,7 +18,7 @@ The Level-Up Application connects employees, employers and training providers. I
 
 ---
 ## SECTION 4 : VIDEO OF SYSTEM MODELLING & USE CASE DEMO
-[Use Case Demo Video](https://github.com/raymondng76/IRS-MR-RS-2019-07-01-IS1FT-GRP-Team10-LevelUp/blob/master/Miscellaneous/Level%20Up%20Video.mp4)
+[Use Case Demo Video](https://github.com/raymondng76/IRS-MR-RS-2019-07-01-IS1FT-GRP-Team10-LevelUp/blob/master/Miscellaneous/Level%20Up%20Video%20Final.mp4)
 ---
 ## SECTION 5 : USER GUIDE
 [User Guide](https://github.com/raymondng76/IRS-MR-RS-2019-07-01-IS1FT-GRP-Team10-LevelUp/blob/master/UserGuide/Team%2010%20LevelUp%20User%20Guide.pdf)
