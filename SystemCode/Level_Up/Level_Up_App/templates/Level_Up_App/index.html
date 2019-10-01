@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends "Level_Up_App\base.html" %}
+{% extends "Level_Up_App/base.html" %}
 {% load static %}
 {% block body_block %}
 {% load widget_tweaks %}
@@ -14,10 +14,8 @@
   </div>
   <div class="row bg-white text-dark d-flex justify-content-center">
     <div class="form-label-group row">
-      {% if userForm.errors %}
-          <strong>{{ error|escape }}</strong>
-      {% endif %}
-    
+      
+
       <form class="index" method="post" action="">
         {% csrf_token %}
         {% comment %} {{ userForm.as_p }} {% endcomment %}

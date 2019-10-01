@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends "Level_Up_App\base.html" %}
+{% extends "Level_Up_App/base.html" %}
 {% load static %}
 {% block body_block %}
 {% load widget_tweaks %}
@@ -12,6 +12,8 @@
   </div>
   <div class="row bg-white text-dark d-flex justify-content-center">
     <div class="form-label-group row">
+
+
     <form class="personalityquestionaire1" action="" method="post">
       {% csrf_token %}
       {% comment %} {{personalityquestionaire1.as_p}} {% endcomment %}
@@ -20,15 +22,16 @@
       {% endfor %}
 
       {% for field in personalityquestionaire1.visible_fields %}
-      <div class="form-group">
+      <div class="form-group" {% if form.title.errors %} has error {% endif %}>
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
           {{ field|add_class:'form-control' }}
-          {% for error in field.errors %}
+          {% for error in personalityquestionaire1.errors %}
             <span class="help-block">{{ error }}</span>
           {% endfor %}
+          <div class="help-block">{{ form.title.errors }}</div>
       </div>
       {% endfor %}
-      
+
       <input type="submit" class="btn btn-lg btn-primary btn-block" name="" value="Submit">
     </form>
     </div>
